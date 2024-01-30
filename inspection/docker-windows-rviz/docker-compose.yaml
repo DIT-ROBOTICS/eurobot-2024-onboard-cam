@@ -1,0 +1,26 @@
+version: '3.8'
+
+## Please read README.md first to setup udev rules##
+
+services:
+  arucotag:
+    build: 
+      context: .  
+      dockerfile: Dockerfile
+    image: pomelo925/realsense-noetic-root:pcl
+    container_name: pcl
+    command: /bin/bash
+    tty: true  
+    network_mode: host
+    privileged: true
+
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      
+      - ../pcl:/home/extraction-ws/src/pcl
+      - ../obj_recognition:/home/extraction-ws/src/obj_recognition
+    environment:
+      - DISPLAY=host.docker.internal:0.0
+      - XAUTHORITY=/root/.Xauthority   # Set Xauthority path
+ 
+
