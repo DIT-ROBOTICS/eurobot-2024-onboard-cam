@@ -2,7 +2,16 @@
 # Stop on any error
 set -e
 
-# Update package list
+# Load the shell's source file, if it exists.
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+
+# Source the ROS setup script
+ROS_DISTRO=noetic
+source /opt/ros/$ROS_DISTRO/setup.bash
+
+
 sudo apt update
 
 # rosdep check --from-paths . --ignore-src --rosdistro noetic
