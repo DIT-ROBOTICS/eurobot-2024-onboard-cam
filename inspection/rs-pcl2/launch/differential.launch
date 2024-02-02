@@ -1,0 +1,13 @@
+<launch>
+  <node pkg="rs-pcl2" type="differential" name="differential" output="screen">
+
+    <arg name="camera" default="cam_pcl_1"/>
+
+    <remap from="/input" to="/$(arg camera)/depth/color/points" />
+    <remap from="/output" to="/$(arg camera)/ladybug" />
+    
+    <!-- Filter Params -->
+    <param name="filter_low" value="-0.5" />
+    <param name="filter_high" value="0.5" />
+  </node>
+</launch>
