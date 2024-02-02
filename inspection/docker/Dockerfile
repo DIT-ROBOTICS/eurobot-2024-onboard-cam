@@ -20,8 +20,8 @@ RUN git clone https://github.com/IntelRealSense/librealsense.git /opt/librealsen
     git rm -r --cached .
 
 ### remove control_transfer error msg from librealsense
-COPY /scripts/fix-tf2.sh /fix-tf2.sh
-RUN /bin/bash /fix-tf2.sh
+COPY /scripts/rm-controlTransfer-warning.sh /rm-controlTransfer-warning.sh
+RUN /bin/bash /rm-controlTransfer-warning.sh
 
 WORKDIR /opt/librealsense/build
 RUN cmake ../ -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=Release && \
