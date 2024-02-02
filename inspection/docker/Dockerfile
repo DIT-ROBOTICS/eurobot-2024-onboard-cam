@@ -19,6 +19,10 @@ WORKDIR /opt/librealsense
 RUN git clone https://github.com/IntelRealSense/librealsense.git /opt/librealsense && \
     git rm -r --cached .
 
+### remove control_transfer error msg from librealsense
+COPY /scripts/fix-tf2.sh /fix-tf2.sh
+RUN /bin/bash /fix-tf2.sh
+
 WORKDIR /opt/librealsense/build
 RUN cmake ../ -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=Release && \
     make -j4 && make install
@@ -43,8 +47,8 @@ RUN sudo apt-get update && \
     && sudo rm -rf /var/lib/apt/lists/* 
 
 ### fix tf2_server_test_nodelets.xml missing error
-COPY fixing.sh /fixing.sh
-RUN /bin/bash /fixing.sh
+COPY /scripts/fix-tf2.sh /fix-tf2.sh
+RUN /bin/bash /fix-tf2.sh
 
 CMD ["/bin/bash"]
 # CMD [" roslaunch realsense2_camera rs_d435_camera_with_model.launch"]

@@ -19,8 +19,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
 
-      - ../pcl:/home/extraction-ws/src/pcl
-      - ../obj_recognition:/home/extraction-ws/src/obj_recognition
+      - ../rs-pcl2:/home/extraction-ws/src/rs-pcl2
       - ../startup:/home/startup
 
       - type: bind
