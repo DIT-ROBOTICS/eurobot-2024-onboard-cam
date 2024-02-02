@@ -5,15 +5,18 @@
 #include <pcl/point_types.h>
 #include <pcl/filters/passthrough.h>
 
+using namespace std;
+
 class PointCloudFilter {
 public:
     PointCloudFilter(ros::NodeHandle& nh) {
         double filter_low, filter_high;
-        
-        // default value
-        nh.param("filter_low", filter_low, -0.5);  
-        nh.param("filter_high", filter_high, 0.5); 
 
+        nh.getParam("/differential/filter_high", filter_high);        
+        nh.getParam("/differential/filter_low", filter_low);
+
+        cout << "high: " << filter_high << " low:" << filter_low << endl;
+        
         // set by param
         pass_.setFilterFieldName("y");
         pass_.setFilterLimits(filter_low, filter_high);
