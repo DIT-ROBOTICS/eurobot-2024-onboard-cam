@@ -4,7 +4,7 @@
   <node pkg="rs-pcl2" type="differential" name="differential" output="screen">
 
     <remap from="/input" to="/$(arg camera)/depth/color/points" />
-    <remap from="/output" to="/$(arg camera)/ladybug" />
+    <remap from="/output" to="/$(arg camera)/differential/ladybug" />
     
     <!-- Filter Params -->
     <param name="filter_low" value="-0.02" />
