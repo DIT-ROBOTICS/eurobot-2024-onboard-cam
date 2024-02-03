@@ -1,0 +1,21 @@
+<launch>
+  <arg name="camera" default="cam_pcl_1"/>
+  
+  <node pkg="rs-pcl2" type="diff" name="diff" output="screen">
+    <remap from="/input" to="/$(arg camera)/depth/color/points" />
+    <remap from="/output" to="/$(arg camera)/differential/ladybug" />
+    
+    <!-- Filter Params for Y axis -->
+    <param name="filter_low_y" value="-0.05" />
+    <param name="filter_high_y" value="0.02" /> 
+ 
+    <!-- Filter Params for Z axis -->
+    <param name="filter_low_z" value="0" />
+    <param name="filter_high_z" value="2" />
+
+    <!-- Filter Params for X axis -->
+    <param name="filter_low_x" value="-0.5" />
+    <param name="filter_high_x" value="0.5" />
+
+  </node>
+</launch>
