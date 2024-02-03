@@ -1,14 +1,16 @@
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
-#include "diff-cube.h" // Include the cube header
+
+#include "diff-cube.h" 
+#include "diff-dbscan.h"
 
 class PointCloudFilter {
 public:
     PointCloudFilter(ros::NodeHandle& nh) {
         cube::initialize(nh); // Initialize cubes with parameters
 
-        sub_ = nh.subscribe("/input", 1, &PointCloudFilter::cloudCallback, this);
-        pub_ = nh.advertise<sensor_msgs::PointCloud2>("/output", 1);
+        sub_ = nh.subscribe("diff/input", 1, &PointCloudFilter::cloudCallback, this);
+        pub_ = nh.advertise<sensor_msgs::PointCloud2>("cube/output", 1);
     }
 
     void cloudCallback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg) {
@@ -28,7 +30,8 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
 
     PointCloudFilter filter(nh);
-
+    dbscan::initialize(nh);
+    
     ros::spin();
 
     return 0;

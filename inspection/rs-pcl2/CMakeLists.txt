@@ -38,12 +38,16 @@ include_directories(
 
 add_definitions(${PCL_DEFINITIONS})
 
+add_library(diff-dbscan src/diff-dbscan.cpp)
+target_link_libraries(diff-dbscan ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(diff-dbscan ${catkin_EXPORTED_TARGETS})
+
 add_library(diff-cube src/diff-cube.cpp)
 target_link_libraries(diff-cube ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(diff-cube ${catkin_EXPORTED_TARGETS})
 
 add_executable(diff src/diff.cpp)
-target_link_libraries(diff diff-cube)
+target_link_libraries(diff diff-cube diff-dbscan)
 add_dependencies(diff ${catkin_EXPORTED_TARGETS})
 
 #############
