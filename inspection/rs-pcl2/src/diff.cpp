@@ -30,7 +30,9 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
 
     PointCloudFilter filter(nh);
-    dbscan::initialize(nh);
+
+    dbscan dbscan_instance;
+    dbscan_instance.initialize(nh);
     
     ros::spin();
 

@@ -11,7 +11,7 @@ source /opt/ros/$ROS_DISTRO/setup.bash
 
 # Default values for parameters
 camera="cam_pcl_1"
-serial_no="949122070603"
+serial_no="215322071267"
 use_filters=true
 filters="spatial,temporal,pointcloud"
 
