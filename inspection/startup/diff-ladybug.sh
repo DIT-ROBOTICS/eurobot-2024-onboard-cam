@@ -2,7 +2,7 @@
 
 ###### DESCRIPTION ######
 ### Usage: differential inspection system
-### Precaution: 
+### Precaution: Run realsense-cam-1.sh First
 ######
 
 ROS_DISTRO=noetic

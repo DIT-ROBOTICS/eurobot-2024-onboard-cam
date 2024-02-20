@@ -73,11 +73,13 @@ void dbscan::addFilledConvexHullMarkersTo(const pcl::PointCloud<pcl::PointXYZRGB
             p.y = cloud_hull->points[poly.vertices[0]].y;
             p.z = cloud_hull->points[poly.vertices[0]].z;
             marker.points.push_back(p);
+
             // Add the second vertex of the triangle
             p.x = cloud_hull->points[poly.vertices[i]].x;
             p.y = cloud_hull->points[poly.vertices[i]].y;
             p.z = cloud_hull->points[poly.vertices[i]].z;
             marker.points.push_back(p);
+            
             // Add the third vertex of the triangle
             p.x = cloud_hull->points[poly.vertices[i+1]].x;
             p.y = cloud_hull->points[poly.vertices[i+1]].y;
@@ -134,6 +136,7 @@ void dbscan::clusterAndVisualize(const sensor_msgs::PointCloud2ConstPtr& cloud_m
 void dbscan::analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster) {
     Eigen::Vector4f min_pt, max_pt;
     pcl::getMinMax3D(*cloud_cluster, min_pt, max_pt);
+
     // Calculate the 8 points of the bounding box
     std::vector<Eigen::Vector4f> bounding_box_points;
     bounding_box_points.push_back(Eigen::Vector4f(min_pt[0], min_pt[1], min_pt[2], 1));
@@ -144,8 +147,10 @@ void dbscan::analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::
     bounding_box_points.push_back(Eigen::Vector4f(max_pt[0], min_pt[1], max_pt[2], 1));
     bounding_box_points.push_back(Eigen::Vector4f(max_pt[0], max_pt[1], min_pt[2], 1));
     bounding_box_points.push_back(Eigen::Vector4f(max_pt[0], max_pt[1], max_pt[2], 1));
+
     // Calculate the volume
     double volume = (max_pt[0] - min_pt[0]) * (max_pt[1] - min_pt[1]) * (max_pt[2] - min_pt[2]);
+
     // Find the nearest point to the camera
     double min_distance = std::numeric_limits<double>::max();
     Eigen::Vector4f nearest_point;
@@ -235,6 +240,7 @@ void dbscan::initialize(ros::NodeHandle& nh) {
     nh.getParam("diff/max_cluster_size", max_cluster_size);
     nh.getParam("diff/line_thickness", line_thickness);
     nh.getParam("diff/min_safety_dist", min_safety_dist);
+
     // Set the parameters for EuclideanClusterExtraction
     ec.setClusterTolerance(cluster_tolerance);
     ec.setMinClusterSize(min_cluster_size);
