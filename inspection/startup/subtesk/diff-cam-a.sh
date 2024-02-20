@@ -1,19 +1,21 @@
 #!/bin/bash
 
 ###### DESCRIPTION ######
-### Usage: turn on camera 2
+### Usage: turn on camera 1
 ### Precaution: 
 ######
+
+### ARGUMENTS ###
+# Default values for parameters
+camera="cam_pcl_1"
+serial_no="215222079777"
+use_filters=true
+filters="spatial,temporal,pointcloud"
+###
 
 # Source the ROS setup script
 ROS_DISTRO=noetic
 source /opt/ros/$ROS_DISTRO/setup.bash
-
-# Default values for parameters
-camera="cam_pcl_2"
-serial_no="948122071492"
-use_filters=true
-filters="spatial,temporal,pointcloud"
 
 # Parse command line arguments for camera and serial_no, and use_filters
 while [[ "$#" -gt 0 ]]; do
