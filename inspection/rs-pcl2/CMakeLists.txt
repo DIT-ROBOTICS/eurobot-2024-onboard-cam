@@ -50,6 +50,9 @@ add_executable(diff src/diff.cpp)
 target_link_libraries(diff diff-cube diff-dbscan)
 add_dependencies(diff ${catkin_EXPORTED_TARGETS})
 
+add_executable(main src/main.cpp)
+target_link_libraries(main ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
