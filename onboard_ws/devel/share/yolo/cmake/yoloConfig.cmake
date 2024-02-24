@@ -67,14 +67,14 @@ set(yolo_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(yolo_SOURCE_PREFIX /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/src/yolo)
-  set(yolo_DEVEL_PREFIX /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel)
+  set(yolo_SOURCE_PREFIX /root/onboard_ws/src/yolo)
+  set(yolo_DEVEL_PREFIX /root/onboard_ws/devel)
   set(yolo_INSTALL_PREFIX "")
   set(yolo_PREFIX ${yolo_DEVEL_PREFIX})
 else()
   set(yolo_SOURCE_PREFIX "")
   set(yolo_DEVEL_PREFIX "")
-  set(yolo_INSTALL_PREFIX /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/install)
+  set(yolo_INSTALL_PREFIX /root/onboard_ws/install)
   set(yolo_PREFIX ${yolo_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(yolo_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/include " STREQUAL " ")
+if(NOT "/root/onboard_ws/devel/include " STREQUAL " ")
   set(yolo_INCLUDE_DIRS "")
-  set(_include_dirs "/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/include")
+  set(_include_dirs "/root/onboard_ws/devel/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/incl
         message(FATAL_ERROR "Project 'yolo' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'yolo' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/src/yolo/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'yolo' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/root/onboard_ws/src/yolo/${idir}'.  ${_report}")
     endif()
     _list_append_unique(yolo_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/lib;/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /root/onboard_ws/devel/lib;/root/onboard_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -185,7 +185,7 @@ foreach(t ${yolo_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "roscpp;rospy;std_msgs;message_runtime")
+set(depends "roscpp;rospy;std_msgs;geometry_msgs;message_runtime")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

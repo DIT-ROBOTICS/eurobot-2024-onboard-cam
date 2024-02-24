@@ -1,21 +1,21 @@
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/CMakeFiles/CMakeTmp
+Change Dir: /root/onboard_ws/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_4793b/fast && /usr/bin/make -f CMakeFiles/cmTC_4793b.dir/build.make CMakeFiles/cmTC_4793b.dir/build
-make[1]: Entering directory '/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4793b.dir/src.c.o
-/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_4793b.dir/src.c.o   -c /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_4793b
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4793b.dir/link.txt --verbose=1
-/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_4793b.dir/src.c.o  -o cmTC_4793b 
-/usr/bin/ld: CMakeFiles/cmTC_4793b.dir/src.c.o: in function `main':
+Run Build Command(s):/usr/bin/make cmTC_6b4c2/fast && /usr/bin/make -f CMakeFiles/cmTC_6b4c2.dir/build.make CMakeFiles/cmTC_6b4c2.dir/build
+make[1]: Entering directory '/root/onboard_ws/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6b4c2.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_6b4c2.dir/src.c.o   -c /root/onboard_ws/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_6b4c2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6b4c2.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_6b4c2.dir/src.c.o  -o cmTC_6b4c2 
+/usr/bin/ld: CMakeFiles/cmTC_6b4c2.dir/src.c.o: in function `main':
 src.c:(.text+0x46): undefined reference to `pthread_create'
 /usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
 /usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_4793b.dir/build.make:87: cmTC_4793b] Error 1
-make[1]: Leaving directory '/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_4793b/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_6b4c2.dir/build.make:87: cmTC_6b4c2] Error 1
+make[1]: Leaving directory '/root/onboard_ws/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_6b4c2/fast] Error 2
 
 
 Source file was:
@@ -39,20 +39,20 @@ int main(void)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/CMakeFiles/CMakeTmp
+Change Dir: /root/onboard_ws/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_d19a3/fast && /usr/bin/make -f CMakeFiles/cmTC_d19a3.dir/build.make CMakeFiles/cmTC_d19a3.dir/build
-make[1]: Entering directory '/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_d19a3.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_d19a3.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
-Linking C executable cmTC_d19a3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d19a3.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_d19a3.dir/CheckFunctionExists.c.o  -o cmTC_d19a3  -lpthreads 
+Run Build Command(s):/usr/bin/make cmTC_00f40/fast && /usr/bin/make -f CMakeFiles/cmTC_00f40.dir/build.make CMakeFiles/cmTC_00f40.dir/build
+make[1]: Entering directory '/root/onboard_ws/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_00f40.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_00f40.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_00f40
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_00f40.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_00f40.dir/CheckFunctionExists.c.o  -o cmTC_00f40  -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_d19a3.dir/build.make:87: cmTC_d19a3] Error 1
-make[1]: Leaving directory '/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_d19a3/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_00f40.dir/build.make:87: cmTC_00f40] Error 1
+make[1]: Leaving directory '/root/onboard_ws/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_00f40/fast] Error 2
 
 
 

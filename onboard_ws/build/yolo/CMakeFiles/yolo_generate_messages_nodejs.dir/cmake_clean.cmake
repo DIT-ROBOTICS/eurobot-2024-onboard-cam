@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/share/gennodejs/ros/yolo/msg/yolomsg.js"
+  "/root/onboard_ws/devel/share/gennodejs/ros/yolo/msg/yolomsg.js"
   "CMakeFiles/yolo_generate_messages_nodejs"
 )
 

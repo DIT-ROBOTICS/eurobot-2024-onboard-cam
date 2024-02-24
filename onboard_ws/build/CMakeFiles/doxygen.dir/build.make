@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/src
+CMAKE_SOURCE_DIR = /root/onboard_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build
+CMAKE_BINARY_DIR = /root/onboard_ws/build
 
 # Utility rule file for doxygen.
 
@@ -67,6 +67,6 @@ CMakeFiles/doxygen.dir/clean:
 .PHONY : CMakeFiles/doxygen.dir/clean
 
 CMakeFiles/doxygen.dir/depend:
-	cd /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/src /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/src /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/onboard_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/onboard_ws/src /root/onboard_ws/src /root/onboard_ws/build /root/onboard_ws/build /root/onboard_ws/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/doxygen.dir/depend
 

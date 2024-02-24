@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/__init__.py"
-  "/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/_yolomsg.py"
+  "/root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/__init__.py"
+  "/root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/_yolomsg.py"
   "CMakeFiles/yolo_generate_messages_py"
 )
 

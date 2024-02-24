@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
 # Source directory: /usr/src/googletest
-# Build directory: /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/gtest
+# Build directory: /root/onboard_ws/build/gtest
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

@@ -7,4 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build'
+export PWD='/root/onboard_ws/build'

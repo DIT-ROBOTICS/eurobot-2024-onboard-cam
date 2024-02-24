@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel/share/common-lisp/ros/yolo/msg/yolomsg.lisp"
+  "/root/onboard_ws/devel/share/common-lisp/ros/yolo/msg/yolomsg.lisp"
   "CMakeFiles/yolo_generate_messages_lisp"
 )
 

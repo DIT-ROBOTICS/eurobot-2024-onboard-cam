@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/src
+CMAKE_SOURCE_DIR = /root/onboard_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build
+CMAKE_BINARY_DIR = /root/onboard_ws/build
 
 # Utility rule file for roscpp_generate_messages_lisp.
 
@@ -63,10 +63,10 @@ yolo/CMakeFiles/roscpp_generate_messages_lisp.dir/build: roscpp_generate_message
 .PHONY : yolo/CMakeFiles/roscpp_generate_messages_lisp.dir/build
 
 yolo/CMakeFiles/roscpp_generate_messages_lisp.dir/clean:
-	cd /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/yolo && $(CMAKE_COMMAND) -P CMakeFiles/roscpp_generate_messages_lisp.dir/cmake_clean.cmake
+	cd /root/onboard_ws/build/yolo && $(CMAKE_COMMAND) -P CMakeFiles/roscpp_generate_messages_lisp.dir/cmake_clean.cmake
 .PHONY : yolo/CMakeFiles/roscpp_generate_messages_lisp.dir/clean
 
 yolo/CMakeFiles/roscpp_generate_messages_lisp.dir/depend:
-	cd /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/src /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/src/yolo /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/yolo /home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/build/yolo/CMakeFiles/roscpp_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/onboard_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/onboard_ws/src /root/onboard_ws/src/yolo /root/onboard_ws/build /root/onboard_ws/build/yolo /root/onboard_ws/build/yolo/CMakeFiles/roscpp_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : yolo/CMakeFiles/roscpp_generate_messages_lisp.dir/depend
 

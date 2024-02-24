@@ -1,2 +1,2 @@
 yolo
--DCATKIN_DEVEL_PREFIX=/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/devel -DCMAKE_INSTALL_PREFIX=/home/vision/gary/eurobot-2024-vision-main/onboard/onboard_ws/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/root/onboard_ws/devel -DCMAKE_INSTALL_PREFIX=/root/onboard_ws/install -G Unix Makefiles
