@@ -17,17 +17,20 @@ import math
 import numpy as np
 import pyrealsense2 as rs
 
-xoffset = 0.014382474 # x distance with machine center
-zoffset = 0.099894668 # Z distance with machine center
+FRONT_CAMERA_ID = '215322071267'
+BACK_CAMERA_ID = '215222079777'
+XOFFSET = 0.014382474 # x distance with machine center
+ZOFFSET = 0.099894668 # Z distance with machine center
 THETA = 0 # camera depression angle in degree
 WIN_WIDTH, WIN_HEIGHT = 640, 480
+GUI = True
 
 class Node:
     def __init__(self):
         ###Adding Param
 
         #start_signal_flag
-        self.START_SIGNAL = 0
+        self.READY_SIGNAL = None
 
         #CvBridge
         self.bridge = CvBridge()
@@ -49,16 +52,25 @@ class Node:
         # self.sub_dep1 = rospy.Subscriber("/cam1/aligned_depth_to_color/image_raw", Image, self.dep_callback1) 
         #self.sub_coln = rospy.Subscriber("/camn/color/image_raw", Image, self.col_callbackn)
         #self.sub_depn = rospy.Subscriber("/camn/depth/image_rect_raw", Image, self.dep_callbackn) 
-        self.sub_start = rospy.Subscriber("/robot/start_signal", PointStamped, self.start_callback)
+        #self.sub_ready = rospy.Subscriber("/robot/startup/ready_signal", PointStamped, self.ready_callback)
+
+
+        # #Server
+        # self.rospy.Service("/robot/start_signal", PointStamped, self.start_callback)
 
     def col_callback1(self, msg):
         self.col1_msg = msg
     def dep_callback1(self, msg):
         self.dep1_msg = msg
 
-    def start_callback(self, msg):
-        if msg.x is not None:
-            self.START_SIGNAL = msg.x
+    # def ready_callback(self, msg):
+    #     if msg.x is not None:
+    #         self.READY_SIGNAL = msg.x
+
+    # def start_callback(self, req):
+    #     if req.x is not None:
+    #         self._SIGNAL = req.x
+    #         return PointStampedResponce(True)
 
     '''
     def col_callbackn(self, msg):
@@ -66,7 +78,7 @@ class Node:
     def dep_callbackn(self, msg):
         self.dep1_msg = msg
     '''
-    def bg_removal(self, col1_msg:Image, dep1_msg:Image):
+    def bg_removal(self, col_msg:Image, dep_msg:Image):
         """
         Input:
         col_msg : 'Image'-- RGB
@@ -77,25 +89,25 @@ class Node:
         """
         # #Convert col_msg
         # cv_col1_img = self.bridge.imgmsg_to_cv2(col1_msg, desired_encoding = "bgr8")
-        np_col1_img = np.array(col1_msg.get_data())
+        np_col_img = np.asanyarray(col_msg.get_data())
         #coln_image = CvBridge.imgmsg_to_cv2(coln_msg, desired_encoding = 'bgr8')
 
         # #Convert dep_msg
         # cv_dep1_img = self.bridge.imgmsg_to_cv2(dep1_msg, desired_encoding = "passthrough")
-        np_dep1_img = np.array(dep1_msg.get_data())
+        np_dep_img = np.asanyarray(dep_msg.get_data())
 
         #3d depth image to match bgr color image #stack 1 dim into 3
-        dep_3d_img = np.dstack((np_dep1_img, np_dep1_img, np_dep1_img)) 
+        dep_3d_img = np.dstack((np_dep_img, np_dep_img, np_dep_img)) 
 
         #bg removal 
         grey = 153
-        bgrm_img = np.where((dep_3d_img > 500) | (np.isnan(dep_3d_img)), grey, np_col1_img)
+        bgrm_img = np.where((dep_3d_img > 500) | (np.isnan(dep_3d_img)), grey, np_col_img)
         return bgrm_img
 
     def yolo(self):
         if rospy.is_shutdown() == False:
             #bg removal
-            color_img_1, depth_img_1, color_img_2, depth_img_2 = rs.wait_for_frames()
+            color_img_1, depth_img_1, color_img_2, depth_img_2 = realsense.wait_for_frames()
             bgrm_img_1 = self.bg_removal(color_img_1, depth_img_1)
             bgrm_img_2 = self.bg_removal(color_img_2, depth_img_2)
             #self.bgrm_pub.publish(self.bridge.cv2_to_imgmsg(bgrm_img, encoding="bgr8"))
@@ -118,9 +130,12 @@ class Node:
                     x, y = int((x1 + x2) / 2), int(y1 / 4 + y2 * 3 / 4)
                     depth = depth_img_1.get_distance(x, y)
 
-                    Xtarget, Ztarget = self.transform_coordinates_1(depth, x, y, rs.intr_1, THETA)
+                    Xtarget, Ztarget = self.transform_coordinates_1(depth, x, y, realsense.intr_1, THETA)
                     plantmsg.x.append(Xtarget)
                     plantmsg.y.append(Ztarget)
+
+                    if GUI is True:
+                     self.cv2_draw(bgrm_img_1, x, y, x1, y1, x2, y2, Xtarget, Ztarget)
 
             for r in results_2:
                 # self.result_img = object.plot()
@@ -132,19 +147,23 @@ class Node:
                     x, y = int((x1 + x2) / 2), int(y1 / 4 + y2 * 3 / 4)
                     depth = depth_img_2.get_distance(x, y)
 
-                    Xtarget, Ztarget = self.transform_coordinates_2(depth, x, y, rs.intr_2, THETA)
+                    Xtarget, Ztarget = self.transform_coordinates_2(depth, x, y, realsense.intr_2, THETA)
                     plantmsg.x.append(Xtarget)
                     plantmsg.y.append(Ztarget)
+
+                    if GUI is True:
+                        self.cv2_draw(bgrm_img_2, x, y, x1, y1, x2, y2, Xtarget, Ztarget)
                     
             self.pub.publish(plantmsg)
+            return bgrm_img_1, bgrm_img_2
 
     def transform_coordinates_1(self, depth, x, y, intr, theta):
         Xtemp = depth * (x - intr.ppx) / intr.fx
         #Ytemp = depth * (y - intr.ppy) / intr.fy
         Ztemp = depth
 
-        Xtarget = Xtemp + xoffset
-        Ztarget = Ztemp*math.cos(math.radians(theta)) + zoffset
+        Xtarget = Xtemp + XOFFSET
+        Ztarget = Ztemp*math.cos(math.radians(theta)) + ZOFFSET
 
         return Xtarget, Ztarget
     
@@ -153,19 +172,24 @@ class Node:
         #Ytemp = depth * (y - intr.ppy) / intr.fy
         Ztemp = depth
 
-        Xtarget = Xtemp + xoffset
-        Ztarget = Ztemp*math.cos(math.radians(theta)) + zoffset
+        Xtarget = Xtemp + XOFFSET
+        Ztarget = Ztemp*math.cos(math.radians(theta)) + ZOFFSET
 
         Xtarget = -Xtarget
         Ztarget = -Ztarget
 
         return Xtarget, Ztarget
     
+    def cv2_draw(self, img, x, y, x1, y1, x2, y2, Xtarget, Ztarget):
+        cv2.rectangle(img, (x1, y1), (x2, y2), (255, 255, 255), 2)
+        cv2.circle(img, (x, y), 3, (0, 0, 255), 2)
+        cv2.putText(img, "({:.3f}, {:.3f})".format(Xtarget, Ztarget), (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+    
 class RealsenseCamera:
     def __init__(self):
         self.pipeline_1 = rs.pipeline()
         self.config_1 = rs.config()
-        self.config_1.enable_device('215322071267') #camera 1 (the front)
+        self.config_1.enable_device(FRONT_CAMERA_ID) #camera 1 (the front)
         self.config_1.enable_stream(rs.stream.color, WIN_WIDTH, WIN_HEIGHT, rs.format.bgr8, 30)
         self.config_1.enable_stream(rs.stream.depth, WIN_WIDTH, WIN_HEIGHT, rs.format.z16, 30)
         self.profile_1 = self.pipeline_1.start(self.config_1)
@@ -174,7 +198,7 @@ class RealsenseCamera:
 
         self.pipeline_2 = rs.pipeline()
         self.config_2 = rs.config()
-        self.config_2.enable_device('215222079777') #camera 2 (the back)
+        self.config_2.enable_device(BACK_CAMERA_ID) #camera 2 (the back)
         self.config_2.enable_stream(rs.stream.color, WIN_WIDTH, WIN_HEIGHT, rs.format.bgr8, 30)
         self.config_2.enable_stream(rs.stream.depth, WIN_WIDTH, WIN_HEIGHT, rs.format.z16, 30)
         self.profile_2 = self.pipeline_2.start(self.config_2)
@@ -197,16 +221,42 @@ class RealsenseCamera:
 
 if __name__ == "__main__":
     
-    #Class
-    rs = RealsenseCamera()
     vision_node = Node()
-    #cv2.namedWindow('RealSense YOLO', cv2.WINDOW_NORMAL)
-    #cv2.resizeWindow('RealSense YOLO', WIN_WIDTH, WIN_HEIGHT)
+
+    #wait for ready signal
+    # while not rospy.is_shutdown():
+    #     if vision_node.READY_SIGNAL is None:
+    #         rospy.loginfo("waiting for ready signal")
+    #         pass
+    #     else:
+    #         break
+
+    realsense = RealsenseCamera()
+
+    #wait for start signal
+    # while not rospy.is_shutdown():
+    #     if vision_node.START_SIGNAL is None:
+    #         rospy.loginfo("waiting for start signal")
+    #         pass
+    #     else:
+    #         break
+    
+    if GUI is True:
+        cv2.namedWindow('Front Camera', cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('Front Camera', WIN_WIDTH, WIN_HEIGHT)
+        cv2.namedWindow('Back Camera', cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('Back Camera', WIN_WIDTH, WIN_HEIGHT)
+
     try:
         while not rospy.is_shutdown():
-            #if vision_node.START_SIGNAL != 0:
-                vision_node.yolo()
-            #cv2.imshow('RealSense YOLO', results)
+            img_1, img_2 = vision_node.yolo()
+
+            if GUI is True:
+                cv2.imshow('Front Camera', np.array(img_1, dtype = np.uint8 ))
+                cv2.imshow('Back Camera', np.array(img_2, dtype = np.uint8 ))
+                if cv2.waitKey(1) == ord('q'):
+                    break
+
             #if cv2.waitKey(1) == ord('q'):
             #    break
 
