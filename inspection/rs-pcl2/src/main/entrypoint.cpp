@@ -4,31 +4,29 @@
 
 ros::ServiceClient client;
 
+
 // Callback for the topic subscriber
 void readySignalCallback(const geometry_msgs::PointStamped::ConstPtr& msg) {
   std_srvs::SetBool srv;
   srv.request.data = true; 
 
-  // Check frame_id to see if we should proceed with the service call
+  // Check frame_id to see if we should proceed with the service ca
   if (msg->header.frame_id == "comp"){
-    if (!client.call(srv)) ROS_ERROR("Failed to call service.");
-
-    system("/home/startup/subtask/diff-cam-a.sh");
-    system("/home/startup/subtask/diff-cam-b.sh");
+    if (client.call(srv)) system("/home/startup/task/univ-inspection.sh");
+    else ROS_ERROR("Failed to call service.");
   } 
-
+  
   else if (msg->header.frame_id == "inspection") {
-    if (!client.call(srv)) ROS_ERROR("Failed to call service.");
-
-    system("/home/startup/subtask/diff-cam-a.sh");
-    system("/home/startup/subtask/diff-cam-b.sh");
-    system("/home/startup/subtask/diff-ladybug.sh");
+    if (client.call(srv)) system("/home/startup/task/diff-inspection.sh");
+    else ROS_ERROR("Failed to call service.");
   } 
-
+  
   else {
     srv.request.data = false; 
     if (!client.call(srv)) ROS_ERROR("Failed to call service.");
   }
+
+  ros::shutdown();
 }
 
 int main(int argc, char **argv) {

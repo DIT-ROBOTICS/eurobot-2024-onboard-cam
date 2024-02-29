@@ -7,7 +7,7 @@
 
 ### ARGUMENTS ###
 # Default values for parameters
-camera="cam_pcl_2"
+camera="diff_cam_B"
 serial_no="215322071267"
 use_filters=true
 filters="spatial,temporal,pointcloud"

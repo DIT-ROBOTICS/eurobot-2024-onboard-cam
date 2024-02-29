@@ -38,20 +38,20 @@ include_directories(
 
 add_definitions(${PCL_DEFINITIONS})
 
-add_library(diff-dbscan src/diff-dbscan.cpp)
-target_link_libraries(diff-dbscan ${catkin_LIBRARIES} ${PCL_LIBRARIES})
-add_dependencies(diff-dbscan ${catkin_EXPORTED_TARGETS})
+add_library(d-dbscan-cluster src/diff/dbscan-cluster.cpp)
+target_link_libraries(d-dbscan-cluster ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(d-dbscan-cluster ${catkin_EXPORTED_TARGETS})
 
-add_library(diff-cube src/diff-cube.cpp)
-target_link_libraries(diff-cube ${catkin_LIBRARIES} ${PCL_LIBRARIES})
-add_dependencies(diff-cube ${catkin_EXPORTED_TARGETS})
+add_library(d-voxelgrid-cube src/diff/voxelgrid-cube.cpp)
+target_link_libraries(d-voxelgrid-cube ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(d-voxelgrid-cube ${catkin_EXPORTED_TARGETS})
 
-add_executable(diff src/diff.cpp)
-target_link_libraries(diff diff-cube diff-dbscan)
-add_dependencies(diff ${catkin_EXPORTED_TARGETS})
+add_executable(d-main src/diff/d-main.cpp)
+target_link_libraries(d-main d-voxelgrid-cube d-dbscan-cluster)
+add_dependencies(d-main ${catkin_EXPORTED_TARGETS})
 
-add_executable(main src/main.cpp)
-target_link_libraries(main ${catkin_LIBRARIES})
+add_executable(entrypoint src/main/entrypoint.cpp)
+target_link_libraries(entrypoint ${catkin_LIBRARIES})
 
 #############
 ## Install ##
