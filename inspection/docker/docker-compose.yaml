@@ -19,7 +19,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
 
-      - ../rs-pcl2:/home/extraction-ws/src/rs-pcl2
+      - ../diff-rs-pcl2:/home/extraction-ws/src/diff-rs-pcl2
       - ../startup:/home/startup
 
       - type: bind
