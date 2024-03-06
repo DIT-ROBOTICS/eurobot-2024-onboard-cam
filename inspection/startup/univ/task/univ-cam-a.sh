@@ -1,16 +1,17 @@
 #!/bin/bash
 
 ###### DESCRIPTION ######
-### Usage: turn on camera 2
+### Usage: turn on camera 1
 ### Precaution: 
 ######
 
 ### ARGUMENTS ###
 # Default values for parameters
-camera="diff_cam_B"
-serial_no="215322071267"
+camera="univ_cam_A"
+serial_no="213622077983"
 use_filters=true
 filters="spatial,temporal,pointcloud"
+LAUNCH_RVIZ=0 # 1 to launch rviz, otherwise don't
 ###
 
 # Source the ROS setup script
@@ -31,9 +32,18 @@ done
 cd /home/realsense-ws
 source devel/setup.bash
 
+/home/startup/clean-node.sh
+sleep 1
+
 # Conditionally add filters to the launch command
 if $use_filters; then
-    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no filters:=$filters
+    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no filters:=$filters &
 else
-    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no
+    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no &
+fi
+
+if [ "$LAUNCH_RVIZ" -eq 1 ]; then
+    cd /home/extraction-ws
+    source devel/setup.bash
+    roslaunch univ-rs-pcl2 rviz-a.launch
 fi

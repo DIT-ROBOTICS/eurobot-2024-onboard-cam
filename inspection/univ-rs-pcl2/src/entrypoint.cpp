@@ -12,9 +12,9 @@ void readySignalCallback(const geometry_msgs::PointStamped::ConstPtr& msg) {
 
   // Check frame_id to see if we should proceed with the service ca
   if (msg->header.frame_id == "inspection") {
-    if (client.call(srv)) system("/home/startup/diff/diff-inspection.sh");
+    if (client.call(srv)) system("/home/startup/univ/univ-inspection.sh");
     else ROS_ERROR("Failed to call service.");
-  }
+  } 
   
   else {
     srv.request.data = false; 
