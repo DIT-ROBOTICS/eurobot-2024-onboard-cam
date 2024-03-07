@@ -20,6 +20,7 @@ services:
       - $HOME/.Xauthority:/root/.Xauthority
 
       - ../diff-rs-pcl2:/home/extraction-ws/src/diff-rs-pcl2
+      - ../univ-rs-pcl2:/home/extraction-ws/src/univ-rs-pcl2
       - ../startup:/home/startup
 
       - type: bind
