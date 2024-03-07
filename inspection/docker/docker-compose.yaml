@@ -1,7 +1,5 @@
 version: '3.8'
 
-## Please read README.md first to setup udev rules##
-
 services:
   arucotag:
     build: 
@@ -19,9 +17,9 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
 
-      - ../diff-rs-pcl2:/home/extraction-ws/src/diff-rs-pcl2
-      - ../univ-rs-pcl2:/home/extraction-ws/src/univ-rs-pcl2
-      - ../startup:/home/startup
+      # - ../diff-rs-pcl2:/home/extraction-ws/src/diff-rs-pcl2
+      # - ../univ-rs-pcl2:/home/extraction-ws/src/univ-rs-pcl2
+      # - ../startup:/home/startup
 
       - type: bind
         source: ./entrypoint.sh
@@ -40,4 +38,3 @@ services:
       resources:
         limits:
           cpus: '2'
-
