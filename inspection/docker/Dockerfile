@@ -54,9 +54,9 @@ RUN /bin/bash /fix-tf2.sh
 #1. git@github.com:DIT-ROBOTICS/eurobot-2024-onboard-cam.git branch:pomelo925
 
 ### development 
-# Clone the eurobot-2024-onboard-cam repository
+# Clone the eurobot-2024-onboard-cam repository 
 WORKDIR /home
-RUN git clone --branch pomelo925 git@github.com:DIT-ROBOTICS/eurobot-2024-onboard-cam.git && \
+RUN git clone --branch pomelo925 https://github.com/DIT-ROBOTICS/eurobot-2024-onboard-cam.git && \
     rm -rf .git
 
 RUN cp -r /home/eurobot-2024-onboard-cam/inspection/startup .
