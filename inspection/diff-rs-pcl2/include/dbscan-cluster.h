@@ -1,5 +1,5 @@
-#ifndef _DIFF_DBSCAN_H_
-#define _DIFF_DBSCAN_H_
+#ifndef _DBSCAN_CLUSTER_H_
+#define _DBSCAN_CLUSTER_H_
 
 #include <ros/ros.h>
 #include <std_msgs/Bool.h>
@@ -16,7 +16,8 @@
 #include <pcl/common/centroid.h>
 #include <pcl/common/common.h>
 #include <pcl/common/pca.h>
-
+#include <deque>
+#include <numeric>
 
 class dbscan {
 public:
@@ -34,11 +35,13 @@ public:
     void addBoundingBoxMarker(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster,
             visualization_msgs::MarkerArray& marker_array, int cluster_id, const std::string& frame_id);
     void clearPreviousMarkers();
+    void timerCallback(const ros::TimerEvent& event);
 
 private:
     ros::Publisher marker_pub;
     ros::Publisher safety_pub;
     ros::Subscriber cloud_sub;
+    ros::Timer safety_timer;
 
     pcl::EuclideanClusterExtraction<pcl::PointXYZRGB> ec;
 
@@ -47,7 +50,9 @@ private:
     size_t window_size=10;
 
     std::deque<double> distance_window;
+
     void checkAndPublishSafety(const double& min_distance);
+    bool has_received_msg = false; // track message reception
 };
 
-#endif // _DIFF_DBSCAN_H_
+#endif // _DBSCAN_CLUSTER_H_

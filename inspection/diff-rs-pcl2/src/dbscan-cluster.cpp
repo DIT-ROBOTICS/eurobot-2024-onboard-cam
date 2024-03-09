@@ -163,10 +163,11 @@ void dbscan::analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::
     }
     // Check the nearest point distance and publish to safety topic
     std_msgs::Bool is_safe_msg;
-    is_safe_msg.data = min_distance >= min_safety_dist; // True if the nearest point is at least 30 cm away
+    is_safe_msg.data = (min_distance >= min_safety_dist); 
     safety_pub.publish(is_safe_msg);
-    std::cout << "\033[2J\033[1;1H"; 
+
     // Print the information
+    std::cout << "\033[2J\033[1;1H"; 
     std::cout << "Object Information:" << std::endl;
     std::cout << "Bounding Box Points:" << std::endl;
     for (const auto& point : bounding_box_points) {
@@ -225,7 +226,20 @@ void dbscan::addBoundingBoxMarker(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& 
 }
 
 void dbscan::cloudCallback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg) {
+    has_received_msg = true;
     clusterAndVisualize(cloud_msg);
+}
+
+
+void dbscan::timerCallback(const ros::TimerEvent& event) {
+    if (!has_received_msg) {
+        // If no message received, assume safe and publish TRUE
+        std_msgs::Bool is_safe_msg;
+        is_safe_msg.data = true;
+        safety_pub.publish(is_safe_msg);
+    }
+    // Reset the flag for the next interval
+    has_received_msg = false;
 }
 
 void dbscan::initialize(ros::NodeHandle& nh, const std::string& param_prefix) {
@@ -234,14 +248,10 @@ void dbscan::initialize(ros::NodeHandle& nh, const std::string& param_prefix) {
 
     visualization_topic = "diff_" + param_prefix + "/visualization_marker_array";
     safety_topic = "diff_" + param_prefix + "/ladybug/safe";
-    cloud_topic = "diff_cam_" + param_prefix + "/differential/ladybug/cube";
-    
-    marker_pub = nh.advertise<visualization_msgs::MarkerArray>(visualization_topic, 1);
-    safety_pub = nh.advertise<std_msgs::Bool>(safety_topic, 1);
-    cloud_sub = nh.subscribe(cloud_topic, 1, &dbscan::cloudCallback, this);
+    cloud_topic = "diff_cam_" + param_prefix + "/universal/ladybug/cube";
 
     // Fetch DBSCAN parameters
-    double cluster_tolerance;
+    double cluster_tolerance, obstacle_existence_checking_period;
     int min_cluster_size, max_cluster_size;
     nh.getParam("diff_" + param_prefix + "/cluster_tolerance", cluster_tolerance);
     nh.getParam("diff_" + param_prefix + "/min_cluster_size", min_cluster_size);
@@ -250,6 +260,15 @@ void dbscan::initialize(ros::NodeHandle& nh, const std::string& param_prefix) {
     // Fetch additional parameters as needed
     nh.getParam("diff_" + param_prefix + "/line_thickness", line_thickness);
     nh.getParam("diff_" + param_prefix + "/min_safety_dist", min_safety_dist);
+    nh.getParam("diff_" + param_prefix + "/obstacle_existence_checking_period", obstacle_existence_checking_period);
+
+    
+    marker_pub = nh.advertise<visualization_msgs::MarkerArray>(visualization_topic, 1);
+    safety_pub = nh.advertise<std_msgs::Bool>(safety_topic, 1);
+    cloud_sub = nh.subscribe(cloud_topic, 1, &dbscan::cloudCallback, this);
+
+    safety_timer = nh.createTimer(ros::Duration(obstacle_existence_checking_period), &dbscan::timerCallback, this);
+
 
     // Configure the DBSCAN clustering
     ec.setClusterTolerance(cluster_tolerance);
