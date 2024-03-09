@@ -50,8 +50,6 @@ RUN sudo apt-get update && \
 COPY /scripts/fix-tf2.sh /fix-tf2.sh
 RUN /bin/bash /fix-tf2.sh
 
-### development 
-#1. git@github.com:DIT-ROBOTICS/eurobot-2024-onboard-cam.git branch:pomelo925
 
 ### development 
 # Clone the eurobot-2024-onboard-cam repository 
@@ -62,13 +60,10 @@ RUN git clone --branch pomelo925 https://github.com/DIT-ROBOTICS/eurobot-2024-on
 RUN cp -r /home/eurobot-2024-onboard-cam/inspection/startup .
 
 # Move necessadirectories to the ROS workspace
-WORKDIR /home/exry traction-ws/src
-RUN cp -r /home/eurobot-2024-onboard-cam/inspection/src/diff-rs-pcl2 . && \
-    cp -r /home/eurobot-2024-onboard-cam/inspection/src/univ-rs-pcl2 . && \
+WORKDIR /home/extraction-ws
+RUN cp -r /home/eurobot-2024-onboard-cam/inspection/src && \
     rm -rf /home/eurobot-2024-onboard-cam
 
-# Install and build the ROS workspace
-WORKDIR /home/extraction-ws
 RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; catkin_make'
 
 # CMD ["/bin/bash"]
