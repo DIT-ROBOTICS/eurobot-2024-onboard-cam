@@ -1,3 +1,0 @@
-<launch>
-  <node pkg="univ-rs-pcl2" type="U-safety-ab" name="U_safety_ab" output="screen"> </node>
-</launch>

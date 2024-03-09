@@ -1,3 +1,0 @@
-<launch>
-  <node name="U_rviz_marker_a" pkg="rviz" type="rviz" args="-d $(find univ-rs-pcl2)/config/marker-cam-a.rviz" required="true"/>
-</launch>

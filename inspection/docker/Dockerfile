@@ -61,14 +61,14 @@ RUN git clone --branch pomelo925 https://github.com/DIT-ROBOTICS/eurobot-2024-on
 
 RUN cp -r /home/eurobot-2024-onboard-cam/inspection/startup .
 
-# Move necessary directories to the ROS workspace
-WORKDIR /home/extraction-ws/src
-RUN cp -r /home/eurobot-2024-onboard-cam/inspection/diff-rs-pcl2 . && \
-    cp -r /home/eurobot-2024-onboard-cam/inspection/univ-rs-pcl2 . && \
+# Move necessadirectories to the ROS workspace
+WORKDIR /home/exry traction-ws/src
+RUN cp -r /home/eurobot-2024-onboard-cam/inspection/src/diff-rs-pcl2 . && \
+    cp -r /home/eurobot-2024-onboard-cam/inspection/src/univ-rs-pcl2 . && \
     rm -rf /home/eurobot-2024-onboard-cam
 
 # Install and build the ROS workspace
 WORKDIR /home/extraction-ws
 RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; catkin_make'
 
-CMD ["/bin/bash"]
+# CMD ["/bin/bash"]
