@@ -1,0 +1,39 @@
+<launch>
+  <arg name="camera" default="univ_cam_A"/>
+  
+  <param name="vision/cam_prefix" value="A" />
+
+  <node pkg="univ-rs-pcl2" type="U-main-a" name="univ_A" output="screen">
+    
+  <!-- Step 1 - CUBE SEGMENTATION  -->
+    <remap from="univ_A/input" to="/$(arg camera)/depth/color/points" />
+    <remap from="cube_A/output" to="/$(arg camera)/universal/ladybug/cube" />
+    
+    <!-- Filter Params for Y axis -->
+    <param name="filter_low_y" value="-1" />
+    <param name="filter_high_y" value="1" /> 
+    <!-- Filter Params for Z axis -->
+    <param name="filter_low_z" value="-1" />
+    <param name="filter_high_z" value="0.25" />
+    <!-- Filter Params for X axis -->
+    <param name="filter_low_x" value="-1" />
+    <param name="filter_high_x" value="1" />
+
+
+  <!-- Step 2 - DBSCAN Cluster -->
+    <remap from="dbscan/input" to="/$(arg camera)/depth/color/points" />
+    <!-- DBSCAN Params -->
+    <param name="cluster_tolerance" value="0.01" />
+    <param name="min_cluster_size" value="20" />
+    <param name="max_cluster_size" value="20000" />
+
+  <!-- Step 3 - Marker Array Params -->
+    <param name="line_thickness" value="0.005" />
+
+  <!-- Step 4 - Safety Params -->
+    <!-- unit: m -->
+    <param name="min_safety_dist" value="0.01" />
+    <!-- unit: sec -->
+    <param name="obstacle_existence_checking_period" value="1" /> 
+  </node>
+</launch>
