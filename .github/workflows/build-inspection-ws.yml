@@ -1,0 +1,48 @@
+name: Build Docker Image for inspection-ws
+
+on:
+  push:
+    branches: [ pomelo925 ]
+    paths:
+      - inspection/docker/Dockerfile
+      - .github/workflows/build-inspection-ws.yml
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - 
+      name: Repo Checkout 
+      uses: actions/checkout@v3
+    - 
+      name: Docker meta
+      id: meta
+      # Ref: https://github.com/docker/metadata-action
+      uses: docker/metadata-action@v5
+      with:
+        # Link: https://hub.docker.com/r/pomelo925/realsense-noetic-amd64/tags
+        images: ${{ secrets.DOCKERHUB_POM_USERNAME }}/realsense-noetic-root
+        tags: pcl
+    - 
+      name: Docker Hub Log-in
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_POM_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_POM_ACCESS_TOKEN_DIT }}
+
+    # Build Docker image
+    - name: Build Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: inspection/docker
+        load: true # Load the image into Docker environment
+        tags: ${{ steps.meta.outputs.tags }}
+        push: false
+
+    # Push Docker image to registry
+    - name: Push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: inspection/docker
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
