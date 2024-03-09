@@ -248,7 +248,7 @@ void dbscan::initialize(ros::NodeHandle& nh, const std::string& param_prefix) {
 
     visualization_topic = "diff_" + param_prefix + "/visualization_marker_array";
     safety_topic = "diff_" + param_prefix + "/ladybug/safe";
-    cloud_topic = "diff_cam_" + param_prefix + "/universal/ladybug/cube";
+    cloud_topic = "diff_cam_" + param_prefix + "/differential/ladybug/cube";
 
     // Fetch DBSCAN parameters
     double cluster_tolerance, obstacle_existence_checking_period;

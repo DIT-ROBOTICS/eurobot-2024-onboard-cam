@@ -24,7 +24,7 @@
     <remap from="dbscan/input" to="/$(arg camera)/depth/color/points" />
     <!-- DBSCAN Params -->
     <param name="cluster_tolerance" value="0.01" />
-    <param name="min_cluster_size" value="20" />
+    <param name="min_cluster_size" value="200" />
     <param name="max_cluster_size" value="20000" />
 
   <!-- Step 3 - Marker Array Params -->

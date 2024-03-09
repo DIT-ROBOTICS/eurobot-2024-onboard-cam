@@ -4,16 +4,13 @@
 
 class SafetyFilter {
 public:
-    SafetyFilter() : nh_("~"), window_size_(3), diff_A_state_(false), diff_B_state_(false) {
+    SafetyFilter() : nh_("~"), diff_A_state_(false), diff_B_state_(false) {
         // Initialize subscribers
         sub_diff_A_ = nh_.subscribe("/diff_A/ladybug/safe", 10, &SafetyFilter::diffACallback, this);
         sub_diff_B_ = nh_.subscribe("/diff_B/ladybug/safe", 10, &SafetyFilter::diffBCallback, this);
 
         // Initialize publisher
         pub_ = nh_.advertise<std_msgs::Bool>("/robot/object/ladybug/safe", 10);
-
-        // Initialize the window filter with False
-        window_filter_ = std::vector<bool>(window_size_, false);
     }
 
     void diffACallback(const std_msgs::Bool::ConstPtr& msg) {
@@ -31,29 +28,13 @@ private:
     ros::Subscriber sub_diff_A_;
     ros::Subscriber sub_diff_B_;
     ros::Publisher pub_;
-    int window_size_;
-    std::vector<bool> window_filter_;
+
     bool diff_A_state_;
     bool diff_B_state_;
 
     void evaluateAndPublish() {
-        // Update window filter
-        bool current_state = diff_A_state_ && diff_B_state_;
-        window_filter_.push_back(current_state);
-        window_filter_.erase(window_filter_.begin());
-
-        // Check window filter
-        bool publish_state = true;
-        for (bool state : window_filter_) {
-            if (!state) {
-                publish_state = false;
-                break;
-            }
-        }
-
-        // Publish result
         std_msgs::Bool output;
-        output.data = publish_state;
+        output.data = diff_A_state_ && diff_B_state_;;
         pub_.publish(output);
     }
 };
