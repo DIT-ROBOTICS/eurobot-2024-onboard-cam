@@ -59,9 +59,9 @@ RUN git clone --branch pomelo925 https://github.com/DIT-ROBOTICS/eurobot-2024-on
 
 RUN cp -r /home/eurobot-2024-onboard-cam/inspection/startup .
 
-# Move necessadirectories to the ROS workspace
+# Move necessary directories to the ROS workspace
 WORKDIR /home/extraction-ws
-RUN cp -r /home/eurobot-2024-onboard-cam/inspection/src && \
+RUN cp -r /home/eurobot-2024-onboard-cam/inspection/src /home/extraction-ws/ && \
     rm -rf /home/eurobot-2024-onboard-cam
 
 RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; catkin_make'
