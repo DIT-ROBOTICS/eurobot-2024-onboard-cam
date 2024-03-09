@@ -5,7 +5,6 @@ on:
     branches: [ pomelo925 ]
     paths:
       - inspection/docker/Dockerfile
-      - inspection/src
       - .github/workflows/build-inspection-ws.yml
 
 jobs:
