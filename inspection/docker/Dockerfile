@@ -48,22 +48,4 @@ RUN sudo apt-get update && \
 
 ### fix tf2_server_test_nodelets.xml missing error
 COPY /scripts/fix-tf2.sh /fix-tf2.sh
-RUN /bin/bash /fix-tf2.sh
-
-
-### development 
-# Clone the eurobot-2024-onboard-cam repository 
-WORKDIR /home
-RUN git clone --branch pomelo925 https://github.com/DIT-ROBOTICS/eurobot-2024-onboard-cam.git && \
-    rm -rf .git
-
-RUN cp -r /home/eurobot-2024-onboard-cam/inspection/startup .
-
-# Move necessary directories to the ROS workspace
-WORKDIR /home/extraction-ws
-RUN cp -r /home/eurobot-2024-onboard-cam/inspection/src /home/extraction-ws/ && \
-    rm -rf /home/eurobot-2024-onboard-cam
-
-RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; catkin_make'
-
-# CMD ["/bin/bash"]
+RUN /bin/bash /fix-tf2.sh 

@@ -17,15 +17,9 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority
 
-      - ../src:/home/extraction-ws/src
+      - ../extraction-ws:/home/extraction-ws
       - ../startup:/home/startup
 
-      - type: bind
-        source: ./entrypoint.sh
-        target: /docker-entrypoint.sh
-
-    # entrypoint: ["/docker-entrypoint.sh"]
-    
     environment:
       - DISPLAY=${DISPLAY}  # Turn on MOBAXTERM first
       - XAUTHORITY=/root/.Xauthority   # Set Xauthority path
@@ -41,7 +35,3 @@ services:
     command: >
       sh -c "chmod +x /home/vision/pomelo925/eurobot-2024-vision-main/onboard/inspection/startup/diff/diff-inspection.sh &&
              ./home/vision/pomelo925/eurobot-2024-vision-main/onboard/inspection/startup/diff/diff-inspection.sh"
-
-    # command: >
-    #   sh -c "chmod +x /home/vision/pomelo925/eurobot-2024-vision-main/onboard/inspection/startup/univ/univ-inspection.sh &&
-    #          ./home/vision/pomelo925/eurobot-2024-vision-main/onboard/inspection/startup/univ/univ-inspection.sh"
