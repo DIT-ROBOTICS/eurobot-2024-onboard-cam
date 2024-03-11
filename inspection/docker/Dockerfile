@@ -41,9 +41,6 @@ RUN cmake ../ -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=Release && \
 RUN sudo apt-get update && \
     rosdep update && \
     rosdep install --from-paths . --ignore-src -r -y && \
-    cd .. && \
-    /bin/bash -c 'source /opt/ros/$ROS_DISTRO/setup.bash; catkin_make' && \
-    echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc \
     && sudo rm -rf /var/lib/apt/lists/* 
 
 ### fix tf2_server_test_nodelets.xml missing error

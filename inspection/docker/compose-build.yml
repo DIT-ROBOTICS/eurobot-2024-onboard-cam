@@ -16,6 +16,7 @@ services:
 
     volumes:
       - ../extraction-ws:/home/extraction-ws
+      - ../realsense-ws:/home/realsense-ws
       - ../startup:/home/startup
 
-    command: /bin/bash -c "cd /home/extraction-ws && catkin_make && echo 'done make'"
+    command: /bin/bash -c "cd /home/extraction-ws && catkin_make && cd /home/realsense-ws && catkin_make && echo 'done make'"
