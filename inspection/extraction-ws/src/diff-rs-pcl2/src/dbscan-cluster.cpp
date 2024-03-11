@@ -96,7 +96,7 @@ void dbscan::clusterAndVisualize(const sensor_msgs::PointCloud2ConstPtr& cloud_m
 
     // Check for empty cloud and clear previous markers
     if (cloud->empty()) {
-        ROS_WARN("Received an empty point cloud.");
+        // ROS_WARN("Received an empty point cloud.");
         clearPreviousMarkers();
         return;
     }
@@ -167,14 +167,16 @@ void dbscan::analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::
     safety_pub.publish(is_safe_msg);
 
     // Print the information
-    std::cout << "\033[2J\033[1;1H"; 
-    std::cout << "Object Information:" << std::endl;
-    std::cout << "Bounding Box Points:" << std::endl;
-    for (const auto& point : bounding_box_points) {
-        std::cout << "(" << point[0] << ", " << point[1] << ", " << point[2] << ")" << std::endl;
-    }
-    std::cout << "Volume: " << volume << " cubic meters" << std::endl;
-    std::cout << "Nearest Point to Camera: (" << nearest_point[0] << ", " << nearest_point[1] << ", " << nearest_point[2] << ")" << std::endl;
+    // std::cout << "\033[2J\033[1;1H"; 
+    // std::cout << "Object Information:" << std::endl;
+    // std::cout << "Bounding Box Points:" << std::endl;
+    // for (const auto& point : bounding_box_points) {
+    //     std::cout << "(" << point[0] << ", " << point[1] << ", " << point[2] << ")" << std::endl;
+    // }
+    // std::cout << "Volume: " << volume << " cubic meters" << std::endl;
+    // std::cout << "Nearest Point to Camera: (" << nearest_point[0] << ", " << nearest_point[1] << ", " << nearest_point[2] << ")" << std::endl;
+    
+    std::cout << "\033[A\033[K";
     std::cout << "Distance to Nearest Point: " << min_distance << " meters" << std::endl;
 }
 

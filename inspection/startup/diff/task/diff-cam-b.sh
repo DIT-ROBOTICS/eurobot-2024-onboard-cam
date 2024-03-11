@@ -32,14 +32,14 @@ done
 cd /home/realsense-ws
 source devel/setup.bash
 
-/home/startup/clean-node.sh
+rosnode kill /diff_cam_B/realsense2_camera_manager &
 sleep 1
 
 # Conditionally add filters to the launch command
 if $use_filters; then
-    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no filters:=$filters
+    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no filters:=$filters &
 else
-    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no
+    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no &
 fi
 
 if [ "$LAUNCH_RVIZ" -eq 1 ]; then

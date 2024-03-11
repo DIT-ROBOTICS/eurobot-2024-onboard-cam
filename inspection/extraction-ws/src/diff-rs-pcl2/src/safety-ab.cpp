@@ -15,12 +15,16 @@ public:
 
     void diffACallback(const std_msgs::Bool::ConstPtr& msg) {
         diff_A_state_ = msg->data;
-        evaluateAndPublish();
     }
 
     void diffBCallback(const std_msgs::Bool::ConstPtr& msg) {
         diff_B_state_ = msg->data;
-        evaluateAndPublish();
+    }
+
+    void evaluateAndPublish() {
+        std_msgs::Bool output;
+        output.data = diff_A_state_ && diff_B_state_;
+        pub_.publish(output);
     }
 
 private:
@@ -29,20 +33,22 @@ private:
     ros::Subscriber sub_diff_B_;
     ros::Publisher pub_;
 
-    bool diff_A_state_;
-    bool diff_B_state_;
-
-    void evaluateAndPublish() {
-        std_msgs::Bool output;
-        output.data = diff_A_state_ && diff_B_state_;;
-        pub_.publish(output);
-    }
+    bool diff_A_state_ = true;
+    bool diff_B_state_ = true;
 };
 
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "ladybug_safety_filter");
     SafetyFilter filter;
-    ros::spin();
+    ros::Rate rate(6); 
+
+    while (ros::ok()) {
+        ros::spinOnce();
+        filter.evaluateAndPublish(); 
+
+        rate.sleep(); 
+    }
+
     return 0;
 }
