@@ -1,0 +1,4 @@
+# Start Service
+bool ready
+---
+bool success
