@@ -45,7 +45,7 @@ class Node:
 
         #Publisher 
         rospy.init_node("vison_node")
-        self.pub = rospy.Publisher("/robot/objects/local_info", yolomsg, queue_size=10)
+        self.pub = rospy.Publisher("/robot/objects/front_plants", yolomsg, queue_size=10)
         self.bgrm_pub = rospy.Publisher("/yolo/bgrm", Image, queue_size=10)
         self.result_pub = rospy.Publisher("/yolo/result", Image, queue_size=10)
 
