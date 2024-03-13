@@ -27,6 +27,7 @@ done
 # Source the ROS setup script
 ROS_DISTRO=noetic
 source /opt/ros/$ROS_DISTRO/setup.bash
+
 cd /home/realsense-ws
 source devel/setup.bash
 

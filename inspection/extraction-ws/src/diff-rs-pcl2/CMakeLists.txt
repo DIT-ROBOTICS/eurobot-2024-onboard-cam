@@ -64,3 +64,7 @@ add_dependencies(D-safety-ab ${catkin_EXPORTED_TARGETS})
 #############
 ## Install ##
 #############
+
+install(TARGETS D-main-a D-main-b D-entrypoint D-safety-ab
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
