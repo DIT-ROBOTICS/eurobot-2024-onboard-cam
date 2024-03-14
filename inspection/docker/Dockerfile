@@ -16,16 +16,16 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 ### install realsense SDK
 WORKDIR /opt/librealsense
-RUN git clone https://github.com/IntelRealSense/librealsense.git /opt/librealsense && \
-    git rm -r --cached .
+RUN git clone https://github.com/IntelRealSense/librealsense.git /opt/librealsense \
+    && git rm -r --cached .
 
 ### remove control_transfer error msg from librealsense
 COPY /scripts/rm-controlTransfer-warning.sh /rm-controlTransfer-warning.sh
 RUN /bin/bash /rm-controlTransfer-warning.sh
 
 WORKDIR /opt/librealsense/build
-RUN cmake ../ -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=Release && \
-    make -j4 && make install
+RUN cmake ../ -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=Release \
+    && make -j4 && make install
 
 ### ros pkg
 # WORKDIR /home/realsense-ws/src
@@ -38,9 +38,9 @@ RUN cmake ../ -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=Release && \
 #     rm -rf .git
 
 ### install and build dependencies
-RUN sudo apt-get update && \
-    rosdep update && \
-    rosdep install --from-paths . --ignore-src -r -y && \
+RUN sudo apt-get update \
+    && rosdep update \
+    && rosdep install --from-paths . --ignore-src -r -y \
     && sudo rm -rf /var/lib/apt/lists/* 
 
 ### fix tf2_server_test_nodelets.xml missing error

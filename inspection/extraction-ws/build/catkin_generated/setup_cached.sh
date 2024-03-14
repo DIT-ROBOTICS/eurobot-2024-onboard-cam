@@ -7,4 +7,9 @@
 # new environment variables
 
 # modified environment variables
+export CMAKE_PREFIX_PATH="/home/extraction-ws/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/extraction-ws/devel/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/extraction-ws/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/extraction-ws/build'
+export ROSLISP_PACKAGE_DIRECTORIES='/home/extraction-ws/devel/share/common-lisp'
+export ROS_PACKAGE_PATH="/home/extraction-ws/src:$ROS_PACKAGE_PATH"

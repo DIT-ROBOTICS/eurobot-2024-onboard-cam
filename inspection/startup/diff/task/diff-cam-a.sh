@@ -9,7 +9,7 @@
 # Default values for parameters
 camera="diff_cam_A"
 serial_no="215222079777"
-filters="spatial,temporal,pointcloud"
+filters="spatial,pointcloud"
 ###
 
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+docker compose -p vision-inspection-differential down --volumes --remove-orphans
 
 find /home/vision/pomelo925/eurobot-2024-vision-main/onboard/inspection -type f -name "*.sh" -exec chmod +x {} \;
 

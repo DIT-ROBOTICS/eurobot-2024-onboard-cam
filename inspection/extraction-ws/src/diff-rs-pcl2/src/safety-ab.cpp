@@ -41,12 +41,11 @@ private:
 int main(int argc, char **argv) {
     ros::init(argc, argv, "ladybug_safety_filter");
     SafetyFilter filter;
-    ros::Rate rate(6); 
 
+    ros::Rate rate(6); 
     while (ros::ok()) {
         ros::spinOnce();
         filter.evaluateAndPublish(); 
-
         rate.sleep(); 
     }
 
