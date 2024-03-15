@@ -14,6 +14,40 @@ std_msgs::ColorRGBA dbscan::assignColor(int id){
     return color;
 }
 
+void dbscan::initialize(ros::NodeHandle& nh, const std::string& param_prefix) {
+    // Update topic subscriptions and publications to use dynamic names if needed
+    std::string visualization_topic, safety_topic, cloud_topic;
+
+    visualization_topic = "diff_" + param_prefix + "/visualization_marker_array";
+    safety_topic = "diff_" + param_prefix + "/ladybug/safe";
+    cloud_topic = "diff_cam_" + param_prefix + "/differential/ladybug/cube";
+
+    // Fetch DBSCAN parameters
+    double cluster_tolerance, obstacle_existence_checking_period;
+    int min_cluster_size, max_cluster_size;
+    nh.getParam("diff_" + param_prefix + "/cluster_tolerance", cluster_tolerance);
+    nh.getParam("diff_" + param_prefix + "/min_cluster_size", min_cluster_size);
+    nh.getParam("diff_" + param_prefix + "/max_cluster_size", max_cluster_size);
+
+    // Fetch additional parameters as needed
+    nh.getParam("diff_" + param_prefix + "/line_thickness", line_thickness);
+    nh.getParam("diff_" + param_prefix + "/min_safety_dist", min_safety_dist);
+    nh.getParam("diff_" + param_prefix + "/obstacle_existence_checking_period", obstacle_existence_checking_period);
+
+    
+    marker_pub = nh.advertise<visualization_msgs::MarkerArray>(visualization_topic, 1);
+    safety_pub = nh.advertise<std_msgs::Bool>(safety_topic, 1);
+    cloud_sub = nh.subscribe(cloud_topic, 1, &dbscan::cloudCallback, this);
+
+    safety_timer = nh.createTimer(ros::Duration(obstacle_existence_checking_period), &dbscan::timerCallback, this);
+
+
+    // Configure the DBSCAN clustering
+    ec.setClusterTolerance(cluster_tolerance);
+    ec.setMinClusterSize(min_cluster_size);
+    ec.setMaxClusterSize(max_cluster_size);
+}
+
 double dbscan::calculateMovingAverage() {
     if (distance_window.empty()) return 0.0;
     double sum = std::accumulate(distance_window.begin(), distance_window.end(), 0.0);
@@ -242,38 +276,4 @@ void dbscan::timerCallback(const ros::TimerEvent& event) {
     }
     // Reset the flag for the next interval
     has_received_msg = false;
-}
-
-void dbscan::initialize(ros::NodeHandle& nh, const std::string& param_prefix) {
-    // Update topic subscriptions and publications to use dynamic names if needed
-    std::string visualization_topic, safety_topic, cloud_topic;
-
-    visualization_topic = "diff_" + param_prefix + "/visualization_marker_array";
-    safety_topic = "diff_" + param_prefix + "/ladybug/safe";
-    cloud_topic = "diff_cam_" + param_prefix + "/differential/ladybug/cube";
-
-    // Fetch DBSCAN parameters
-    double cluster_tolerance, obstacle_existence_checking_period;
-    int min_cluster_size, max_cluster_size;
-    nh.getParam("diff_" + param_prefix + "/cluster_tolerance", cluster_tolerance);
-    nh.getParam("diff_" + param_prefix + "/min_cluster_size", min_cluster_size);
-    nh.getParam("diff_" + param_prefix + "/max_cluster_size", max_cluster_size);
-
-    // Fetch additional parameters as needed
-    nh.getParam("diff_" + param_prefix + "/line_thickness", line_thickness);
-    nh.getParam("diff_" + param_prefix + "/min_safety_dist", min_safety_dist);
-    nh.getParam("diff_" + param_prefix + "/obstacle_existence_checking_period", obstacle_existence_checking_period);
-
-    
-    marker_pub = nh.advertise<visualization_msgs::MarkerArray>(visualization_topic, 1);
-    safety_pub = nh.advertise<std_msgs::Bool>(safety_topic, 1);
-    cloud_sub = nh.subscribe(cloud_topic, 1, &dbscan::cloudCallback, this);
-
-    safety_timer = nh.createTimer(ros::Duration(obstacle_existence_checking_period), &dbscan::timerCallback, this);
-
-
-    // Configure the DBSCAN clustering
-    ec.setClusterTolerance(cluster_tolerance);
-    ec.setMinClusterSize(min_cluster_size);
-    ec.setMaxClusterSize(max_cluster_size);
 }
