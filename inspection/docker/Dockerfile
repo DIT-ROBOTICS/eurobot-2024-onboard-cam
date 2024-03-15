@@ -28,14 +28,13 @@ RUN cmake ../ -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=Release \
     && make -j4 && make install
 
 ### ros pkg
-# WORKDIR /home/realsense-ws/src
-# RUN git clone -b noetic-devel https://github.com/pal-robotics/aruco_ros.git && \
-#     git clone --branch 0.3.7 https://github.com/ros-drivers/usb_cam.git && \
-#     git clone --branch noetic https://github.com/ros-perception/image_pipeline.git && \
-#     git clone --branch kinetic-devel https://github.com/pal-robotics/ddynamic_reconfigure.git && \
-#     git clone --branch ros1-legacy --single-branch https://github.com/IntelRealSense/realsense-ros.git && \
-#     (cd realsense-ros && git checkout $(git tag | sort -V | grep -P "^2.\\d+\\.\\d+" | tail -1)) && \
-#     rm -rf .git
+WORKDIR /home/realsense-ws/src
+RUN git clone --branch 0.3.7 https://github.com/ros-drivers/usb_cam.git && \
+    git clone --branch noetic https://github.com/ros-perception/image_pipeline.git && \
+    git clone --branch kinetic-devel https://github.com/pal-robotics/ddynamic_reconfigure.git && \
+    git clone --branch ros1-legacy --single-branch https://github.com/IntelRealSense/realsense-ros.git && \
+    (cd realsense-ros && git checkout $(git tag | sort -V | grep -P "^2.\\d+\\.\\d+" | tail -1)) && \
+    rm -rf .git
 
 ### install and build dependencies
 RUN sudo apt-get update \

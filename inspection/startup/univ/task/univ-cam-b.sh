@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###### DESCRIPTION ######
-### Usage: turn on camera 2
+### Usage: turn on camera A
 ### Precaution: 
 ######
 
@@ -9,14 +9,9 @@
 # Default values for parameters
 camera="univ_cam_B"
 serial_no="215222077504"
-use_filters=true
-filters="spatial,temporal,pointcloud"
-LAUNCH_RVIZ=0 # 1 to launch rviz, otherwise don't
+filters="spatial,pointcloud"
 ###
 
-# Source the ROS setup script
-ROS_DISTRO=noetic
-source /opt/ros/$ROS_DISTRO/setup.bash
 
 # Parse command line arguments for camera and serial_no, and use_filters
 while [[ "$#" -gt 0 ]]; do
@@ -29,21 +24,13 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
+# Source the ROS setup script
+ROS_DISTRO=noetic
+source /opt/ros/$ROS_DISTRO/setup.bash
+
 cd /home/realsense-ws
 source devel/setup.bash
 
-/home/startup/clean-node.sh
-sleep 1
+roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no filters:=$filters
 
-# Conditionally add filters to the launch command
-if $use_filters; then
-    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no filters:=$filters
-else
-    roslaunch realsense2_camera rs_camera.launch camera:=$camera serial_no:=$serial_no
-fi
-
-if [ "$LAUNCH_RVIZ" -eq 1 ]; then
-    cd /home/extraction-ws
-    source devel/setup.bash
-    roslaunch univ-rs-pcl2 rviz-b.launch
-fi
+wait
