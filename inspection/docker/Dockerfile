@@ -36,13 +36,14 @@ RUN git clone --branch 0.3.7 https://github.com/ros-drivers/usb_cam.git && \
     (cd realsense-ros && git checkout $(git tag | sort -V | grep -P "^2.\\d+\\.\\d+" | tail -1)) && \
     rm -rf .git
 
-WORKDIR /home/realsense-ws
-RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc \
-    && /bin/bash -c 'source /opt/ros/noetic/setup.bash; catkin_make -v' \
-    && apt-get update \
-    && rosdep update \
-    && rosdep install --from-paths . --ignore-src -r -y \
-    && rm -rf /var/lib/apt/lists/*
+### install and build dependencies
+RUN sudo apt-get update && \
+    rosdep update && \
+    rosdep install --from-paths . --ignore-src -r -y && \
+    cd .. && \
+    /bin/bash -c 'source /opt/ros/$ROS_DISTRO/setup.bash; catkin_make' && \
+    echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc \
+    && sudo rm -rf /var/lib/apt/lists/* 
 
 ### fix tf2_server_test_nodelets.xml missing error
 COPY /scripts/fix-tf2.sh /fix-tf2.sh
