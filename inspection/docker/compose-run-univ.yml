@@ -33,4 +33,4 @@ services:
           cpus: '2'
     
     command: >
-      /bin/bash 
+      /bin/bash

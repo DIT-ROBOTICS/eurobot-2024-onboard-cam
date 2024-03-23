@@ -50,7 +50,7 @@ void dbscan::initialize(ros::NodeHandle& nh, const std::string& param_prefix) {
 
 double dbscan::calculateMovingAverage() {
     if (distance_window.empty()) return 0.0;
-    double sum = std::accumulate(distance_window.begin(), distance_window.end(), 0.0);
+    const double sum = std::accumulate(distance_window.begin(), distance_window.end(), 0.0);
     return sum / distance_window.size();
 }
 

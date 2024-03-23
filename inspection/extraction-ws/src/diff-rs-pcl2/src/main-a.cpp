@@ -1,8 +1,10 @@
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <bits/stdc++.h>
 
 #include "voxelgrid-cube.h" 
 #include "dbscan-cluster.h"
+
 
 class PointCloudFilter {
 public:
