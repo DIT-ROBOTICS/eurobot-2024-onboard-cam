@@ -27,7 +27,7 @@ class Node:
         #CvBridge
         self.bridge = CvBridge()
         #YOLO
-        self.model = YOLO("src/yolo/weight/onboard_cam.pt")
+        self.model = YOLO("/root/onboard_ws/src/yolo/weight/onboard_cam_low.pt")
         self.model.fuse() # Fuse for speed
         self.result_img = None
 

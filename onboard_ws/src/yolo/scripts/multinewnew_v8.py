@@ -31,10 +31,11 @@ class Node:
         ###Adding Param
 
         #start_signal_flag
-        self.READY_SIGNAL = False
-        self.START_SIGNAL = False
-        self.SKIP_SIGNAL = False
-        self.KILL_SIGNAL = False
+        self.group = 2
+        self.READY_SIGNAL = None
+        # self.START_SIGNAL = 0
+        self.WATCH_SIGNAL = 0
+        self.KILL_SIGNAL = 0
 
         #CvBridge
         self.bridge = CvBridge()
@@ -45,7 +46,7 @@ class Node:
 
         #Publisher 
         rospy.init_node("vison_node")
-        self.pub = rospy.Publisher("/robot/objects/local_info", yolomsg, queue_size=10)
+        self.pub = rospy.Publisher("/robot/objects/front_plants", yolomsg, queue_size=10)
         self.bgrm_pub = rospy.Publisher("/yolo/bgrm", Image, queue_size=10)
         self.result_pub = rospy.Publisher("/yolo/result", Image, queue_size=10)
 
@@ -56,42 +57,70 @@ class Node:
         # self.sub_dep1 = rospy.Subscriber("/cam1/aligned_depth_to_color/image_raw", Image, self.dep_callback1) 
         #self.sub_coln = rospy.Subscriber("/camn/color/image_raw", Image, self.col_callbackn)
         #self.sub_depn = rospy.Subscriber("/camn/depth/image_rect_raw", Image, self.dep_callbackn) 
-        #self.sub_ready = rospy.Subscriber("/robot/startup/ready_signal", PointStamped, self.ready_callback)
+        self.sub_ready = rospy.Subscriber("/robot/startup/ready_signal", PointStamped, self.ready_callback)
+
 
 
         # #Server
-        rospy.Service("/robot/startup/ready_signal", signal, self.ready_callback)
-        rospy.Service("/robot/start_signal", signal, self.start_callback)
-        rospy.Service("/robot/skip_signal", signal, self.stop_callback)
-        rospy.Service("/robot/kill_signal", signal, self.kill_callback)
+        # rospy.Service("/robot/startup/ready_signal", signal, self.ready_callback)
+        # rospy.Service("/robot/start_signal", signal, self.start_callback)
+        # rospy.Service("/robot/skip_signal", signal, self.stop_callback)
+        # rospy.Service("/robot/kill_signal", signal, self.kill_callback)
 
-    def col_callback1(self, msg):
-        self.col1_msg = msg
-    def dep_callback1(self, msg):
-        self.dep1_msg = msg
+        rospy.Service("/robot/onboard_cam", signal, self.onboard_cam_callback)
 
-    def ready_callback(self, req):
-        if req.ready is True:
-            self.READY_SIGNAL = req.ready
+        #client
+        def client(group):
+            rospy.wait_for_service("/robot/startup/ready_signal")
+            try:
+                ready_client = rospy.ServiceProxy("/robot/startup/ready_signal",ready)
+                resp = ready_client(group)
+            except rospy.ServiceException:
+                rospy.logwarn("Service call failde")
+
+    # def col_callback1(self, msg):
+    #     self.col1_msg = msg
+    # def dep_callback1(self, msg):
+    #     self.dep1_msg = msg
+
+    def ready_callback(self, msg):
+        if msg.point.x is not None:
+            self.READY_SIGNAL = msg.point.x
+            rospy.loginfo("We are ready")
+
+    # def start_callback(self, req):
+    #     if req.ready is True:
+    #         self.START_SIGNAL = req.ready
+    #         return signalResponse(True)
+
+    # def stop_callback(self, req):
+    #     if req.ready is True:
+    #         self.SKIP_SIGNAL = req.ready
+    #         return signalResponse(True)
+    #     if req.ready is False:
+    #         self.SKIP_SIGNAL = req.ready
+    #         return signalResponse(False)
+
+    # def kill_callback(self, req):
+    #     if req.ready is True:
+    #         self.KILL_SIGNAL = req.ready
+    #         return signalResponse(True)
+
+    def onboard_cam_callback(self, req):
+        # if req.signal == 1:
+        #     self.START_SIGNAL = req.signal
+        #     return signalResponse(True)
+        if req.signal == 0:
+            self.WATCH_SIGNAL = req.signal
             return signalResponse(True)
-
-    def start_callback(self, req):
-        if req.ready is True:
-            self.START_SIGNAL = req.ready
+        if req.signal == 1:
+            self.WATCH_SIGNAL = req.signal
             return signalResponse(True)
-
-    def stop_callback(self, req):
-        if req.ready is True:
-            self.SKIP_SIGNAL = req.ready
+        if req.signal == 2:
+            self.KILL_SIGNAL = req.signal
             return signalResponse(True)
-        if req.ready is False:
-            self.SKIP_SIGNAL = req.ready
+        else:
             return signalResponse(False)
-
-    def kill_callback(self, req):
-        if req.ready is True:
-            self.KILL_SIGNAL = req.ready
-            return signalResponse(True)
 
     '''
     def col_callbackn(self, msg):
@@ -122,7 +151,7 @@ class Node:
 
         #bg removal 
         grey = 153
-        bgrm_img = np.where((dep_3d_img > 500) | (np.isnan(dep_3d_img)), grey, np_col_img)
+        bgrm_img = np.where((dep_3d_img > 450) | (np.isnan(dep_3d_img)), grey, np_col_img)
         return bgrm_img
 
     def yolo(self):
@@ -186,7 +215,11 @@ class Node:
         Xtarget = Xtemp + XOFFSET
         Ztarget = Ztemp*math.cos(math.radians(theta)) + ZOFFSET
 
-        return Xtarget, Ztarget
+        #fit with main system
+        X_target = Ztarget
+        Z_target = -Xtarget
+
+        return X_target, Z_target
     
     def transform_coordinates_2(self, depth, x, y, intr, theta):
         Xtemp = depth * (x - intr.ppx) / intr.fx
@@ -196,10 +229,15 @@ class Node:
         Xtarget = Xtemp + XOFFSET
         Ztarget = Ztemp*math.cos(math.radians(theta)) + ZOFFSET
 
+        #back camera
         Xtarget = -Xtarget
         Ztarget = -Ztarget
 
-        return Xtarget, Ztarget
+        #fit with main system
+        X_target = Ztarget
+        Z_target = -Xtarget
+
+        return X_target, Z_target
     
     def cv2_draw(self, img, x, y, x1, y1, x2, y2, Xtarget, Ztarget):
         cv2.rectangle(img, (x1, y1), (x2, y2), (255, 255, 255), 2)
@@ -244,23 +282,24 @@ if __name__ == "__main__":
     
     vision_node = Node()
 
-    #wait for ready signal
-    while not rospy.is_shutdown():
-        if vision_node.READY_SIGNAL is False:
-            rospy.loginfo("waiting for ready signal")
-            rospy.sleep(1.)
-        else:
-            break
+    # #wait for ready signal
+    # while not rospy.is_shutdown():
+    #     if vision_node.READY_SIGNAL is None:
+    #         rospy.loginfo("waiting for ready signal")
+    #         rospy.sleep(1.)
+    #     else:
+    #         vision_node.client(vision_node.group)
+    #         break
 
     realsense = RealsenseCamera()
 
-    #wait for start signal
-    while not rospy.is_shutdown():
-        if vision_node.START_SIGNAL is False:
-            rospy.loginfo("waiting for start signal")
-            rospy.sleep(1.)
-        else:
-            break
+    # #wait for start signal
+    # while not rospy.is_shutdown():
+    #     if vision_node.START_SIGNAL == 0:
+    #         rospy.loginfo("waiting for start signal")
+    #         rospy.sleep(1.)
+    #     elif vision_node.START_SIGNAL == 1:
+    #         break
     
     if GUI is True:
         cv2.namedWindow('Front Camera', cv2.WINDOW_NORMAL)
@@ -272,10 +311,13 @@ if __name__ == "__main__":
         while not rospy.is_shutdown():
 
             #kill the node
-            if vision_node.KILL_SIGNAL is not False:
+            if vision_node.KILL_SIGNAL == 2:
                 break
-            #skip the main function
-            if vision_node.SKIP_SIGNAL is not False:
+
+            #skip the main function or not
+            if vision_node.WATCH_SIGNAL == 1:
+                pass
+            if vision_node.WATCH_SIGNAL == 0:
                 continue
 
             img_withbox_1, img_withbox_2 = vision_node.yolo()

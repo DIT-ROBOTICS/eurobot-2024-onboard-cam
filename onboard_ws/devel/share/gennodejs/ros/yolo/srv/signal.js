@@ -21,22 +21,22 @@ class signalRequest {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
-      this.ready = null;
+      this.signal = null;
     }
     else {
-      if (initObj.hasOwnProperty('ready')) {
-        this.ready = initObj.ready
+      if (initObj.hasOwnProperty('signal')) {
+        this.signal = initObj.signal
       }
       else {
-        this.ready = false;
+        this.signal = 0;
       }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type signalRequest
-    // Serialize message field [ready]
-    bufferOffset = _serializer.bool(obj.ready, buffer, bufferOffset);
+    // Serialize message field [signal]
+    bufferOffset = _serializer.int64(obj.signal, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -44,13 +44,13 @@ class signalRequest {
     //deserializes a message object of type signalRequest
     let len;
     let data = new signalRequest(null);
-    // Deserialize message field [ready]
-    data.ready = _deserializer.bool(buffer, bufferOffset);
+    // Deserialize message field [signal]
+    data.signal = _deserializer.int64(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 1;
+    return 8;
   }
 
   static datatype() {
@@ -60,14 +60,14 @@ class signalRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '6f378c6311f9e6ccd2cd8c5b327003f1';
+    return 'e57ff88f4c17b249531e77b7e8959fdc';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    # Start Service
-    bool ready
+    # onboard cam Service
+    int64 signal
     
     `;
   }
@@ -78,11 +78,11 @@ class signalRequest {
       msg = {};
     }
     const resolved = new signalRequest(null);
-    if (msg.ready !== undefined) {
-      resolved.ready = msg.ready;
+    if (msg.signal !== undefined) {
+      resolved.signal = msg.signal;
     }
     else {
-      resolved.ready = false
+      resolved.signal = 0
     }
 
     return resolved;
@@ -163,6 +163,6 @@ class signalResponse {
 module.exports = {
   Request: signalRequest,
   Response: signalResponse,
-  md5sum() { return 'e4630b5865ae6b0c6957bf21fb90b5a2'; },
+  md5sum() { return 'f949f7237e30347573901ebcc4b2ea5e'; },
   datatype() { return 'yolo/signal'; }
 };

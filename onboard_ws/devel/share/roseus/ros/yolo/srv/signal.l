@@ -20,37 +20,57 @@
 
 (defclass yolo::signalRequest
   :super ros::object
-  :slots (_ready ))
+  :slots (_signal ))
 
 (defmethod yolo::signalRequest
   (:init
    (&key
-    ((:ready __ready) nil)
+    ((:signal __signal) 0)
     )
    (send-super :init)
-   (setq _ready __ready)
+   (setq _signal (round __signal))
    self)
-  (:ready
-   (&optional (__ready :null))
-   (if (not (eq __ready :null)) (setq _ready __ready)) _ready)
+  (:signal
+   (&optional __signal)
+   (if __signal (setq _signal __signal)) _signal)
   (:serialization-length
    ()
    (+
-    ;; bool _ready
-    1
+    ;; int64 _signal
+    8
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; bool _ready
-       (if _ready (write-byte -1 s) (write-byte 0 s))
+     ;; int64 _signal
+#+(or :alpha :irix6 :x86_64)
+       (progn (sys::poke _signal (send s :buffer) (send s :count) :long) (incf (stream-count s) 8))
+#-(or :alpha :irix6 :x86_64)
+       (cond ((and (class _signal) (= (length (_signal . bv)) 2)) ;; bignum
+              (write-long (ash (elt (_signal . bv) 0) 0) s)
+              (write-long (ash (elt (_signal . bv) 1) -1) s))
+             ((and (class _signal) (= (length (_signal . bv)) 1)) ;; big1
+              (write-long (elt (_signal . bv) 0) s)
+              (write-long (if (>= _signal 0) 0 #xffffffff) s))
+             (t                                         ;; integer
+              (write-long _signal s)(write-long (if (>= _signal 0) 0 #xffffffff) s)))
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; bool _ready
-     (setq _ready (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
+   ;; int64 _signal
+#+(or :alpha :irix6 :x86_64)
+      (setf _signal (prog1 (sys::peek buf ptr- :long) (incf ptr- 8)))
+#-(or :alpha :irix6 :x86_64)
+      (setf _signal (let ((b0 (prog1 (sys::peek buf ptr- :integer) (incf ptr- 4)))
+                  (b1 (prog1 (sys::peek buf ptr- :integer) (incf ptr- 4))))
+              (cond ((= b1 -1) b0)
+                     ((and (= b1  0)
+                           (<= lisp::most-negative-fixnum b0 lisp::most-positive-fixnum))
+                      b0)
+                    ((= b1  0) (make-instance bignum :size 1 :bv (integer-vector b0)))
+                    (t (make-instance bignum :size 2 :bv (integer-vector b0 (ash b1 1)))))))
    ;;
    self)
   )
@@ -96,7 +116,7 @@
   :super ros::object
   :slots ())
 
-(setf (get yolo::signal :md5sum-) "e4630b5865ae6b0c6957bf21fb90b5a2")
+(setf (get yolo::signal :md5sum-) "f949f7237e30347573901ebcc4b2ea5e")
 (setf (get yolo::signal :datatype-) "yolo/signal")
 (setf (get yolo::signal :request) yolo::signalRequest)
 (setf (get yolo::signal :response) yolo::signalResponse)
@@ -104,26 +124,26 @@
 (defmethod yolo::signalRequest
   (:response () (instance yolo::signalResponse :init)))
 
-(setf (get yolo::signalRequest :md5sum-) "e4630b5865ae6b0c6957bf21fb90b5a2")
+(setf (get yolo::signalRequest :md5sum-) "f949f7237e30347573901ebcc4b2ea5e")
 (setf (get yolo::signalRequest :datatype-) "yolo/signalRequest")
 (setf (get yolo::signalRequest :definition-)
-      "# Start Service
-bool ready
+      "# onboard cam Service
+int64 signal
 ---
 bool success
 ")
 
-(setf (get yolo::signalResponse :md5sum-) "e4630b5865ae6b0c6957bf21fb90b5a2")
+(setf (get yolo::signalResponse :md5sum-) "f949f7237e30347573901ebcc4b2ea5e")
 (setf (get yolo::signalResponse :datatype-) "yolo/signalResponse")
 (setf (get yolo::signalResponse :definition-)
-      "# Start Service
-bool ready
+      "# onboard cam Service
+int64 signal
 ---
 bool success
 ")
 
 
 
-(provide :yolo/signal "e4630b5865ae6b0c6957bf21fb90b5a2")
+(provide :yolo/signal "f949f7237e30347573901ebcc4b2ea5e")
 
 

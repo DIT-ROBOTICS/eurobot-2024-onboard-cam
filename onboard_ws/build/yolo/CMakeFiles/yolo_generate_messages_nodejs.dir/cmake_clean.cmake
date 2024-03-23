@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "/root/onboard_ws/devel/share/gennodejs/ros/yolo/msg/yolomsg.js"
+  "/root/onboard_ws/devel/share/gennodejs/ros/yolo/srv/ready.js"
   "/root/onboard_ws/devel/share/gennodejs/ros/yolo/srv/signal.js"
   "CMakeFiles/yolo_generate_messages_nodejs"
 )

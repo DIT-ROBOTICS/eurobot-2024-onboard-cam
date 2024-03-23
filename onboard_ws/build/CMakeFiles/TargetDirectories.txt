@@ -68,10 +68,11 @@
 /root/onboard_ws/build/yolo/CMakeFiles/yolo_generate_messages.dir
 /root/onboard_ws/build/yolo/CMakeFiles/roscpp_generate_messages_py.dir
 /root/onboard_ws/build/yolo/CMakeFiles/_yolo_generate_messages_check_deps_yolomsg.dir
+/root/onboard_ws/build/yolo/CMakeFiles/yolo_genlisp.dir
+/root/onboard_ws/build/yolo/CMakeFiles/_yolo_generate_messages_check_deps_ready.dir
 /root/onboard_ws/build/yolo/CMakeFiles/geometry_msgs_generate_messages_py.dir
 /root/onboard_ws/build/yolo/CMakeFiles/_yolo_generate_messages_check_deps_signal.dir
 /root/onboard_ws/build/yolo/CMakeFiles/yolo_generate_messages_cpp.dir
-/root/onboard_ws/build/yolo/CMakeFiles/yolo_genlisp.dir
 /root/onboard_ws/build/yolo/CMakeFiles/yolo_gencpp.dir
 /root/onboard_ws/build/yolo/CMakeFiles/yolo_generate_messages_eus.dir
 /root/onboard_ws/build/yolo/CMakeFiles/yolo_generate_messages_lisp.dir

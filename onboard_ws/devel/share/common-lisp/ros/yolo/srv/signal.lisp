@@ -7,11 +7,11 @@
 ;//! \htmlinclude signal-request.msg.html
 
 (cl:defclass <signal-request> (roslisp-msg-protocol:ros-message)
-  ((ready
-    :reader ready
-    :initarg :ready
-    :type cl:boolean
-    :initform cl:nil))
+  ((signal
+    :reader signal
+    :initarg :signal
+    :type cl:integer
+    :initform 0))
 )
 
 (cl:defclass signal-request (<signal-request>)
@@ -22,17 +22,35 @@
   (cl:unless (cl:typep m 'signal-request)
     (roslisp-msg-protocol:msg-deprecation-warning "using old message class name yolo-srv:<signal-request> is deprecated: use yolo-srv:signal-request instead.")))
 
-(cl:ensure-generic-function 'ready-val :lambda-list '(m))
-(cl:defmethod ready-val ((m <signal-request>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader yolo-srv:ready-val is deprecated.  Use yolo-srv:ready instead.")
-  (ready m))
+(cl:ensure-generic-function 'signal-val :lambda-list '(m))
+(cl:defmethod signal-val ((m <signal-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader yolo-srv:signal-val is deprecated.  Use yolo-srv:signal instead.")
+  (signal m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <signal-request>) ostream)
   "Serializes a message object of type '<signal-request>"
-  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:if (cl:slot-value msg 'ready) 1 0)) ostream)
+  (cl:let* ((signed (cl:slot-value msg 'signal)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 18446744073709551616) signed)))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 32) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 40) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 48) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 56) unsigned) ostream)
+    )
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <signal-request>) istream)
   "Deserializes a message object of type '<signal-request>"
-    (cl:setf (cl:slot-value msg 'ready) (cl:not (cl:zerop (cl:read-byte istream))))
+    (cl:let ((unsigned 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 32) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 40) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 48) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 56) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:slot-value msg 'signal) (cl:if (cl:< unsigned 9223372036854775808) unsigned (cl:- unsigned 18446744073709551616))))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<signal-request>)))
@@ -43,24 +61,24 @@
   "yolo/signalRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<signal-request>)))
   "Returns md5sum for a message object of type '<signal-request>"
-  "e4630b5865ae6b0c6957bf21fb90b5a2")
+  "f949f7237e30347573901ebcc4b2ea5e")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'signal-request)))
   "Returns md5sum for a message object of type 'signal-request"
-  "e4630b5865ae6b0c6957bf21fb90b5a2")
+  "f949f7237e30347573901ebcc4b2ea5e")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<signal-request>)))
   "Returns full string definition for message of type '<signal-request>"
-  (cl:format cl:nil "# Start Service~%bool ready~%~%~%"))
+  (cl:format cl:nil "# onboard cam Service~%int64 signal~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'signal-request)))
   "Returns full string definition for message of type 'signal-request"
-  (cl:format cl:nil "# Start Service~%bool ready~%~%~%"))
+  (cl:format cl:nil "# onboard cam Service~%int64 signal~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <signal-request>))
   (cl:+ 0
-     1
+     8
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <signal-request>))
   "Converts a ROS message object to a list"
   (cl:list 'signal-request
-    (cl:cons ':ready (ready msg))
+    (cl:cons ':signal (signal msg))
 ))
 ;//! \htmlinclude signal-response.msg.html
 
@@ -101,10 +119,10 @@
   "yolo/signalResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<signal-response>)))
   "Returns md5sum for a message object of type '<signal-response>"
-  "e4630b5865ae6b0c6957bf21fb90b5a2")
+  "f949f7237e30347573901ebcc4b2ea5e")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'signal-response)))
   "Returns md5sum for a message object of type 'signal-response"
-  "e4630b5865ae6b0c6957bf21fb90b5a2")
+  "f949f7237e30347573901ebcc4b2ea5e")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<signal-response>)))
   "Returns full string definition for message of type '<signal-response>"
   (cl:format cl:nil "bool success~%~%~%"))

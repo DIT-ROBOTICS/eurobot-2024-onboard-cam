@@ -55,6 +55,7 @@ include yolo/CMakeFiles/yolo_generate_messages_py.dir/progress.make
 
 yolo/CMakeFiles/yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/_yolomsg.py
 yolo/CMakeFiles/yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_signal.py
+yolo/CMakeFiles/yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_ready.py
 yolo/CMakeFiles/yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/__init__.py
 yolo/CMakeFiles/yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/__init__.py
 
@@ -69,21 +70,29 @@ yolo/CMakeFiles/yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/di
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python code from SRV yolo/signal"
 	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /root/onboard_ws/src/yolo/srv/signal.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv
 
+/root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_ready.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
+/root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_ready.py: /root/onboard_ws/src/yolo/srv/ready.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python code from SRV yolo/ready"
+	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /root/onboard_ws/src/yolo/srv/ready.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv
+
 /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/__init__.py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/_yolomsg.py
 /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/__init__.py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_signal.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for yolo"
+/root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/__init__.py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_ready.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python msg __init__.py for yolo"
 	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg --initpy
 
 /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/__init__.py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/_yolomsg.py
 /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/__init__.py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_signal.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python srv __init__.py for yolo"
+/root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/__init__.py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_ready.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python srv __init__.py for yolo"
 	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv --initpy
 
 yolo_generate_messages_py: yolo/CMakeFiles/yolo_generate_messages_py
 yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/_yolomsg.py
 yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_signal.py
+yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/_ready.py
 yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/msg/__init__.py
 yolo_generate_messages_py: /root/onboard_ws/devel/lib/python3/dist-packages/yolo/srv/__init__.py
 yolo_generate_messages_py: yolo/CMakeFiles/yolo_generate_messages_py.dir/build.make

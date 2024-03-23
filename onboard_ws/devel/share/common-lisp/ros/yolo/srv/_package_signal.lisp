@@ -1,6 +1,6 @@
 (cl:in-package yolo-srv)
-(cl:export '(READY-VAL
-          READY
+(cl:export '(SIGNAL-VAL
+          SIGNAL
           SUCCESS-VAL
           SUCCESS
 ))

@@ -55,6 +55,7 @@ include yolo/CMakeFiles/yolo_generate_messages_eus.dir/progress.make
 
 yolo/CMakeFiles/yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/ros/yolo/msg/yolomsg.l
 yolo/CMakeFiles/yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/ros/yolo/srv/signal.l
+yolo/CMakeFiles/yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/ros/yolo/srv/ready.l
 yolo/CMakeFiles/yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/ros/yolo/manifest.l
 
 
@@ -68,13 +69,19 @@ yolo/CMakeFiles/yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from yolo/signal.srv"
 	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/onboard_ws/src/yolo/srv/signal.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/share/roseus/ros/yolo/srv
 
+/root/onboard_ws/devel/share/roseus/ros/yolo/srv/ready.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/onboard_ws/devel/share/roseus/ros/yolo/srv/ready.l: /root/onboard_ws/src/yolo/srv/ready.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from yolo/ready.srv"
+	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/onboard_ws/src/yolo/srv/ready.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/share/roseus/ros/yolo/srv
+
 /root/onboard_ws/devel/share/roseus/ros/yolo/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp manifest code for yolo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp manifest code for yolo"
 	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /root/onboard_ws/devel/share/roseus/ros/yolo yolo std_msgs geometry_msgs
 
 yolo_generate_messages_eus: yolo/CMakeFiles/yolo_generate_messages_eus
 yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/ros/yolo/msg/yolomsg.l
 yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/ros/yolo/srv/signal.l
+yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/ros/yolo/srv/ready.l
 yolo_generate_messages_eus: /root/onboard_ws/devel/share/roseus/ros/yolo/manifest.l
 yolo_generate_messages_eus: yolo/CMakeFiles/yolo_generate_messages_eus.dir/build.make
 

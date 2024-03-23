@@ -24,17 +24,17 @@ struct signalRequest_
   typedef signalRequest_<ContainerAllocator> Type;
 
   signalRequest_()
-    : ready(false)  {
+    : signal(0)  {
     }
   signalRequest_(const ContainerAllocator& _alloc)
-    : ready(false)  {
+    : signal(0)  {
   (void)_alloc;
     }
 
 
 
-   typedef uint8_t _ready_type;
-  _ready_type ready;
+   typedef int64_t _signal_type;
+  _signal_type signal;
 
 
 
@@ -65,7 +65,7 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::yolo::signalRequest_<ContainerAllocator1> & lhs, const ::yolo::signalRequest_<ContainerAllocator2> & rhs)
 {
-  return lhs.ready == rhs.ready;
+  return lhs.signal == rhs.signal;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -122,12 +122,12 @@ struct MD5Sum< ::yolo::signalRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "6f378c6311f9e6ccd2cd8c5b327003f1";
+    return "e57ff88f4c17b249531e77b7e8959fdc";
   }
 
   static const char* value(const ::yolo::signalRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x6f378c6311f9e6ccULL;
-  static const uint64_t static_value2 = 0xd2cd8c5b327003f1ULL;
+  static const uint64_t static_value1 = 0xe57ff88f4c17b249ULL;
+  static const uint64_t static_value2 = 0x531e77b7e8959fdcULL;
 };
 
 template<class ContainerAllocator>
@@ -146,8 +146,8 @@ struct Definition< ::yolo::signalRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "# Start Service\n"
-"bool ready\n"
+    return "# onboard cam Service\n"
+"int64 signal\n"
 ;
   }
 
@@ -166,7 +166,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.ready);
+      stream.next(m.signal);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -185,8 +185,8 @@ struct Printer< ::yolo::signalRequest_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::yolo::signalRequest_<ContainerAllocator>& v)
   {
-    s << indent << "ready: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.ready);
+    s << indent << "signal: ";
+    Printer<int64_t>::stream(s, indent + "  ", v.signal);
   }
 };
 

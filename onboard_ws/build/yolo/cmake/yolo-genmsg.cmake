@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "yolo: 1 messages, 1 services")
+message(STATUS "yolo: 1 messages, 2 services")
 
 set(MSG_I_FLAGS "-Iyolo:/root/onboard_ws/src/yolo/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg")
 
@@ -27,6 +27,11 @@ add_custom_target(_yolo_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "yolo" "/root/onboard_ws/src/yolo/srv/signal.srv" ""
 )
 
+get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/ready.srv" NAME_WE)
+add_custom_target(_yolo_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "yolo" "/root/onboard_ws/src/yolo/srv/ready.srv" ""
+)
+
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
@@ -47,6 +52,12 @@ _generate_srv_cpp(yolo
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/yolo
 )
+_generate_srv_cpp(yolo
+  "/root/onboard_ws/src/yolo/srv/ready.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/yolo
+)
 
 ### Generating Module File
 _generate_module_cpp(yolo
@@ -63,6 +74,8 @@ add_dependencies(yolo_generate_messages yolo_generate_messages_cpp)
 get_filename_component(_filename "/root/onboard_ws/src/yolo/msg/yolomsg.msg" NAME_WE)
 add_dependencies(yolo_generate_messages_cpp _yolo_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/signal.srv" NAME_WE)
+add_dependencies(yolo_generate_messages_cpp _yolo_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/ready.srv" NAME_WE)
 add_dependencies(yolo_generate_messages_cpp _yolo_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -88,6 +101,12 @@ _generate_srv_eus(yolo
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/yolo
 )
+_generate_srv_eus(yolo
+  "/root/onboard_ws/src/yolo/srv/ready.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/yolo
+)
 
 ### Generating Module File
 _generate_module_eus(yolo
@@ -104,6 +123,8 @@ add_dependencies(yolo_generate_messages yolo_generate_messages_eus)
 get_filename_component(_filename "/root/onboard_ws/src/yolo/msg/yolomsg.msg" NAME_WE)
 add_dependencies(yolo_generate_messages_eus _yolo_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/signal.srv" NAME_WE)
+add_dependencies(yolo_generate_messages_eus _yolo_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/ready.srv" NAME_WE)
 add_dependencies(yolo_generate_messages_eus _yolo_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -129,6 +150,12 @@ _generate_srv_lisp(yolo
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/yolo
 )
+_generate_srv_lisp(yolo
+  "/root/onboard_ws/src/yolo/srv/ready.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/yolo
+)
 
 ### Generating Module File
 _generate_module_lisp(yolo
@@ -145,6 +172,8 @@ add_dependencies(yolo_generate_messages yolo_generate_messages_lisp)
 get_filename_component(_filename "/root/onboard_ws/src/yolo/msg/yolomsg.msg" NAME_WE)
 add_dependencies(yolo_generate_messages_lisp _yolo_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/signal.srv" NAME_WE)
+add_dependencies(yolo_generate_messages_lisp _yolo_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/ready.srv" NAME_WE)
 add_dependencies(yolo_generate_messages_lisp _yolo_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -170,6 +199,12 @@ _generate_srv_nodejs(yolo
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/yolo
 )
+_generate_srv_nodejs(yolo
+  "/root/onboard_ws/src/yolo/srv/ready.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/yolo
+)
 
 ### Generating Module File
 _generate_module_nodejs(yolo
@@ -186,6 +221,8 @@ add_dependencies(yolo_generate_messages yolo_generate_messages_nodejs)
 get_filename_component(_filename "/root/onboard_ws/src/yolo/msg/yolomsg.msg" NAME_WE)
 add_dependencies(yolo_generate_messages_nodejs _yolo_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/signal.srv" NAME_WE)
+add_dependencies(yolo_generate_messages_nodejs _yolo_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/ready.srv" NAME_WE)
 add_dependencies(yolo_generate_messages_nodejs _yolo_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -211,6 +248,12 @@ _generate_srv_py(yolo
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/yolo
 )
+_generate_srv_py(yolo
+  "/root/onboard_ws/src/yolo/srv/ready.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/yolo
+)
 
 ### Generating Module File
 _generate_module_py(yolo
@@ -227,6 +270,8 @@ add_dependencies(yolo_generate_messages yolo_generate_messages_py)
 get_filename_component(_filename "/root/onboard_ws/src/yolo/msg/yolomsg.msg" NAME_WE)
 add_dependencies(yolo_generate_messages_py _yolo_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/signal.srv" NAME_WE)
+add_dependencies(yolo_generate_messages_py _yolo_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/onboard_ws/src/yolo/srv/ready.srv" NAME_WE)
 add_dependencies(yolo_generate_messages_py _yolo_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

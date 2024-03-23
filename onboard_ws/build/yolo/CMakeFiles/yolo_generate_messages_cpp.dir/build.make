@@ -55,6 +55,7 @@ include yolo/CMakeFiles/yolo_generate_messages_cpp.dir/progress.make
 
 yolo/CMakeFiles/yolo_generate_messages_cpp: /root/onboard_ws/devel/include/yolo/yolomsg.h
 yolo/CMakeFiles/yolo_generate_messages_cpp: /root/onboard_ws/devel/include/yolo/signal.h
+yolo/CMakeFiles/yolo_generate_messages_cpp: /root/onboard_ws/devel/include/yolo/ready.h
 
 
 /root/onboard_ws/devel/include/yolo/yolomsg.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
@@ -70,9 +71,17 @@ yolo/CMakeFiles/yolo_generate_messages_cpp: /root/onboard_ws/devel/include/yolo/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from yolo/signal.srv"
 	cd /root/onboard_ws/src/yolo && /root/onboard_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/onboard_ws/src/yolo/srv/signal.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/include/yolo -e /opt/ros/noetic/share/gencpp/cmake/..
 
+/root/onboard_ws/devel/include/yolo/ready.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/onboard_ws/devel/include/yolo/ready.h: /root/onboard_ws/src/yolo/srv/ready.srv
+/root/onboard_ws/devel/include/yolo/ready.h: /opt/ros/noetic/share/gencpp/msg.h.template
+/root/onboard_ws/devel/include/yolo/ready.h: /opt/ros/noetic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from yolo/ready.srv"
+	cd /root/onboard_ws/src/yolo && /root/onboard_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/onboard_ws/src/yolo/srv/ready.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/include/yolo -e /opt/ros/noetic/share/gencpp/cmake/..
+
 yolo_generate_messages_cpp: yolo/CMakeFiles/yolo_generate_messages_cpp
 yolo_generate_messages_cpp: /root/onboard_ws/devel/include/yolo/yolomsg.h
 yolo_generate_messages_cpp: /root/onboard_ws/devel/include/yolo/signal.h
+yolo_generate_messages_cpp: /root/onboard_ws/devel/include/yolo/ready.h
 yolo_generate_messages_cpp: yolo/CMakeFiles/yolo_generate_messages_cpp.dir/build.make
 
 .PHONY : yolo_generate_messages_cpp

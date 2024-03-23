@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
 messages_str = "/root/onboard_ws/src/yolo/msg/yolomsg.msg"
-services_str = "/root/onboard_ws/src/yolo/srv/signal.srv"
+services_str = "/root/onboard_ws/src/yolo/srv/signal.srv;/root/onboard_ws/src/yolo/srv/ready.srv"
 pkg_name = "yolo"
 dependencies_str = "std_msgs;geometry_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"

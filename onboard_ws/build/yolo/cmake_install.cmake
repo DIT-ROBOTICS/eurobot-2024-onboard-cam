@@ -42,7 +42,10 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yolo/srv" TYPE FILE FILES "/root/onboard_ws/src/yolo/srv/signal.srv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yolo/srv" TYPE FILE FILES
+    "/root/onboard_ws/src/yolo/srv/signal.srv"
+    "/root/onboard_ws/src/yolo/srv/ready.srv"
+    )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

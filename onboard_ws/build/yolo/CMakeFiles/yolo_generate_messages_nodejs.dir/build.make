@@ -55,6 +55,7 @@ include yolo/CMakeFiles/yolo_generate_messages_nodejs.dir/progress.make
 
 yolo/CMakeFiles/yolo_generate_messages_nodejs: /root/onboard_ws/devel/share/gennodejs/ros/yolo/msg/yolomsg.js
 yolo/CMakeFiles/yolo_generate_messages_nodejs: /root/onboard_ws/devel/share/gennodejs/ros/yolo/srv/signal.js
+yolo/CMakeFiles/yolo_generate_messages_nodejs: /root/onboard_ws/devel/share/gennodejs/ros/yolo/srv/ready.js
 
 
 /root/onboard_ws/devel/share/gennodejs/ros/yolo/msg/yolomsg.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
@@ -67,9 +68,15 @@ yolo/CMakeFiles/yolo_generate_messages_nodejs: /root/onboard_ws/devel/share/genn
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from yolo/signal.srv"
 	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/onboard_ws/src/yolo/srv/signal.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/share/gennodejs/ros/yolo/srv
 
+/root/onboard_ws/devel/share/gennodejs/ros/yolo/srv/ready.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/onboard_ws/devel/share/gennodejs/ros/yolo/srv/ready.js: /root/onboard_ws/src/yolo/srv/ready.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from yolo/ready.srv"
+	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/onboard_ws/src/yolo/srv/ready.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/share/gennodejs/ros/yolo/srv
+
 yolo_generate_messages_nodejs: yolo/CMakeFiles/yolo_generate_messages_nodejs
 yolo_generate_messages_nodejs: /root/onboard_ws/devel/share/gennodejs/ros/yolo/msg/yolomsg.js
 yolo_generate_messages_nodejs: /root/onboard_ws/devel/share/gennodejs/ros/yolo/srv/signal.js
+yolo_generate_messages_nodejs: /root/onboard_ws/devel/share/gennodejs/ros/yolo/srv/ready.js
 yolo_generate_messages_nodejs: yolo/CMakeFiles/yolo_generate_messages_nodejs.dir/build.make
 
 .PHONY : yolo_generate_messages_nodejs

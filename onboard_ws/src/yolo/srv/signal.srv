@@ -1,4 +1,4 @@
-# Start Service
-bool ready
+# onboard cam Service
+int64 signal
 ---
 bool success

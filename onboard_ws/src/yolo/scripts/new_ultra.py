@@ -60,8 +60,8 @@ class RealsenseCamera:
     def __init__(self):
         self.pipeline = rs.pipeline()
         self.config = rs.config()
-        #self.config.enable_device('215222079777') #camera 1 (the back)
-        self.config.enable_device('215322071267') #camera 2 (the front)
+        self.config.enable_device('215222079777') #camera 1 (the back)
+        #self.config.enable_device('215322071267') #camera 2 (the front)
         self.config.enable_stream(rs.stream.color, WIN_WIDTH, WIN_HEIGHT, rs.format.bgr8, 30)
         self.config.enable_stream(rs.stream.depth, WIN_WIDTH, WIN_HEIGHT, rs.format.z16, 30)
         self.profile = self.pipeline.start(self.config)

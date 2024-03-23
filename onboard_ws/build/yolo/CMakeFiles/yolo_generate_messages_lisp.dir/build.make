@@ -55,6 +55,7 @@ include yolo/CMakeFiles/yolo_generate_messages_lisp.dir/progress.make
 
 yolo/CMakeFiles/yolo_generate_messages_lisp: /root/onboard_ws/devel/share/common-lisp/ros/yolo/msg/yolomsg.lisp
 yolo/CMakeFiles/yolo_generate_messages_lisp: /root/onboard_ws/devel/share/common-lisp/ros/yolo/srv/signal.lisp
+yolo/CMakeFiles/yolo_generate_messages_lisp: /root/onboard_ws/devel/share/common-lisp/ros/yolo/srv/ready.lisp
 
 
 /root/onboard_ws/devel/share/common-lisp/ros/yolo/msg/yolomsg.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
@@ -67,9 +68,15 @@ yolo/CMakeFiles/yolo_generate_messages_lisp: /root/onboard_ws/devel/share/common
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Lisp code from yolo/signal.srv"
 	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/onboard_ws/src/yolo/srv/signal.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/share/common-lisp/ros/yolo/srv
 
+/root/onboard_ws/devel/share/common-lisp/ros/yolo/srv/ready.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/onboard_ws/devel/share/common-lisp/ros/yolo/srv/ready.lisp: /root/onboard_ws/src/yolo/srv/ready.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/onboard_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Lisp code from yolo/ready.srv"
+	cd /root/onboard_ws/build/yolo && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/onboard_ws/src/yolo/srv/ready.srv -Iyolo:/root/onboard_ws/src/yolo/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p yolo -o /root/onboard_ws/devel/share/common-lisp/ros/yolo/srv
+
 yolo_generate_messages_lisp: yolo/CMakeFiles/yolo_generate_messages_lisp
 yolo_generate_messages_lisp: /root/onboard_ws/devel/share/common-lisp/ros/yolo/msg/yolomsg.lisp
 yolo_generate_messages_lisp: /root/onboard_ws/devel/share/common-lisp/ros/yolo/srv/signal.lisp
+yolo_generate_messages_lisp: /root/onboard_ws/devel/share/common-lisp/ros/yolo/srv/ready.lisp
 yolo_generate_messages_lisp: yolo/CMakeFiles/yolo_generate_messages_lisp.dir/build.make
 
 .PHONY : yolo_generate_messages_lisp

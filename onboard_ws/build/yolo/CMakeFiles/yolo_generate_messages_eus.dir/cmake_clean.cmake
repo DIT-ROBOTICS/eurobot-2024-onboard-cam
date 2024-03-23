@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "/root/onboard_ws/devel/share/roseus/ros/yolo/manifest.l"
   "/root/onboard_ws/devel/share/roseus/ros/yolo/msg/yolomsg.l"
+  "/root/onboard_ws/devel/share/roseus/ros/yolo/srv/ready.l"
   "/root/onboard_ws/devel/share/roseus/ros/yolo/srv/signal.l"
   "CMakeFiles/yolo_generate_messages_eus"
 )

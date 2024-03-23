@@ -15,9 +15,9 @@ services:
         volumes:
             - /tmp/.X11-unix:/tmp/.X11-unix
             - $HOME/.Xauthority:/root/.Xauthority
-            - $HOME/gary/gary_ws:/root/onboard_ws #change the workspace path
-            - $HOME/gary/shell_script/gary.sh:/root/gary.sh
-            - $HOME/gary/shell_script/test.sh:/root/test.sh
+            - $HOME/gary/eurobot-2024-vision-main/onboard/onboard_ws:/root/onboard_ws #change the workspace path
+            - $HOME/gary/eurobot-2024-vision-main/onboard/onboard_envs/gary.sh:/root/gary.sh
+            - $HOME/gary/eurobot-2024-vision-main/onboard/onboard_envs/test.sh:/root/test.sh
             - /dev:/dev
         environment:
             - DISPLAY=$DISPLAY
@@ -31,6 +31,6 @@ services:
                     memory: 2gb
         cpuset: "0,1"
         image: ohin112/rosentralytics:R2_film
-        container_name: gary_test3
+        container_name: gary_test
         command: bash
         entrypoint: sudo /bin/bash -c '/root/gary.sh'

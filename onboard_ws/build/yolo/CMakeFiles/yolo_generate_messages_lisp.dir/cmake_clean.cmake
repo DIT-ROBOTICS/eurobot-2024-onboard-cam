@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "/root/onboard_ws/devel/share/common-lisp/ros/yolo/msg/yolomsg.lisp"
+  "/root/onboard_ws/devel/share/common-lisp/ros/yolo/srv/ready.lisp"
   "/root/onboard_ws/devel/share/common-lisp/ros/yolo/srv/signal.lisp"
   "CMakeFiles/yolo_generate_messages_lisp"
 )

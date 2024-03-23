@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::yolo::signal > {
   static const char* value()
   {
-    return "e4630b5865ae6b0c6957bf21fb90b5a2";
+    return "f949f7237e30347573901ebcc4b2ea5e";
   }
 
   static const char* value(const ::yolo::signal&) { return value(); }
