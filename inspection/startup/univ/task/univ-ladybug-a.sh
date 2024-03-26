@@ -6,7 +6,7 @@
 ######
 
 ### ARGUMENTS ###
-LAUNCH_RVIZ=1 # 1 to launch rviz, otherwise don't
+LAUNCH_RVIZ=0 # 1 to launch rviz, otherwise don't
 ###
 
 ROS_DISTRO=noetic

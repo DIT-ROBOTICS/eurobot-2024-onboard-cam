@@ -14,7 +14,7 @@
     <param name="filter_high_y" value="1" /> 
     <!-- Filter Params for Z axis -->
     <param name="filter_low_z" value="-1" />
-    <param name="filter_high_z" value="0.25" />
+    <param name="filter_high_z" value="0.3" />
     <!-- Filter Params for X axis -->
     <param name="filter_low_x" value="-1" />
     <param name="filter_high_x" value="1" />
