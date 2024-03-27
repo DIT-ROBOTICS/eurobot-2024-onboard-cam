@@ -1,3 +1,35 @@
+/**
+ *
+ * @file safety-ab.cpp
+ * @brief
+ * Safety filter node for evaluating the safety status of two different systems (diff_A and diff_B) 
+ * and publishing the combined safety status. The node subscribes to safety status topics of both systems, 
+ * evaluates the safety status based on logical AND operation, and publishes the combined safety status.
+ * 
+ * Functionalities :
+ * - Subscribing to safety status topics of diff_A and diff_B
+ * - Evaluating safety status based on logical AND operation
+ * - Publishing the combined safety status
+ *
+ * @code{.unparsed}
+ *      _____
+ *     /  /::\       ___           ___
+ *    /  /:/\:\     /  /\         /  /\
+ *   /  /:/  \:\   /  /:/        /  /:/
+ *  /__/:/ \__\:| /__/::\       /  /:/
+ *  \  \:\ /  /:/ \__\/\:\__   /  /::\
+ *   \  \:\  /:/     \  \:\/\ /__/:/\:\
+ *    \  \:\/:/       \__\::/ \__\/  \:\
+ *     \  \::/        /__/:/       \  \:\
+ *      \__\/         \__\/         \__\/
+ * @endcode
+ *
+ * @author pomelo925 (yoseph.huang@gmail.com)
+ * @version 2.1
+ * @date 2024-03-27
+ *
+ */
+
 #include "ros/ros.h"
 #include "std_msgs/Bool.h"
 #include <vector>

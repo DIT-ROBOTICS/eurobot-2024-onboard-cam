@@ -1,3 +1,37 @@
+/**
+ *
+ * @file main-a.cpp
+ * @brief
+ * Implementation of a point cloud filter node for processing sensor data. 
+ * The node subscribes to a point cloud topic, applies voxel grid filtering using a cube instance,
+ * and publishes the filtered point cloud.
+ *
+ *  Functionalities :
+ * - Subscribing to a point cloud topic
+ * - Applying voxel grid filtering using a cube instance
+ * - Publishing the filtered point cloud
+ * - Initializing and configuring a DBSCAN instance for clustering analysis
+ * 
+ *
+ * @code{.unparsed}
+ *      _____
+ *     /  /::\       ___           ___
+ *    /  /:/\:\     /  /\         /  /\
+ *   /  /:/  \:\   /  /:/        /  /:/
+ *  /__/:/ \__\:| /__/::\       /  /:/
+ *  \  \:\ /  /:/ \__\/\:\__   /  /::\
+ *   \  \:\  /:/     \  \:\/\ /__/:/\:\
+ *    \  \:\/:/       \__\::/ \__\/  \:\
+ *     \  \::/        /__/:/       \  \:\
+ *      \__\/         \__\/         \__\/
+ * @endcode
+ *
+ * @author pomelo925 (yoseph.huang@gmail.com)
+ * @version 2.1
+ * @date 2024-03-27
+ *
+ */
+
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
 

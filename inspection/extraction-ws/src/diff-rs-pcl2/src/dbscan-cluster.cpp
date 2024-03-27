@@ -1,3 +1,40 @@
+/**
+ *
+ * @file dbscan-cluster.cpp
+ * @brief
+ * Implementation of the DBSCAN for clustering analysis of sensor data, along with visualization and safety checks. 
+ * 
+ * Functionalities :
+ * - Initializing DBSCAN parameters
+ * - Calculating moving average of the minimum distance
+ * - Clearing previous visualization markers
+ * - Adding filled convex hull markers to visualization marker array
+ * - Clustering sensor data and visualizing it
+ * - Analyzing object information and printing
+ * - Adding bounding box markers
+ * - Listening to callbacks of sensor data
+ * - Periodically checking sensor data for safety assurance
+ * 
+ *
+ * @code{.unparsed}
+ *      _____
+ *     /  /::\       ___           ___
+ *    /  /:/\:\     /  /\         /  /\
+ *   /  /:/  \:\   /  /:/        /  /:/
+ *  /__/:/ \__\:| /__/::\       /  /:/
+ *  \  \:\ /  /:/ \__\/\:\__   /  /::\
+ *   \  \:\  /:/     \  \:\/\ /__/:/\:\
+ *    \  \:\/:/       \__\::/ \__\/  \:\
+ *     \  \::/        /__/:/       \  \:\
+ *      \__\/         \__\/         \__\/
+ * @endcode
+ *
+ * @author pomelo925 (yoseph.huang@gmail.com)
+ * @version 2.1
+ * @date 2024-03-27
+ *
+ */
+
 #include "dbscan-cluster.h"
 
 std_msgs::ColorRGBA dbscan::assignColor(int id){
