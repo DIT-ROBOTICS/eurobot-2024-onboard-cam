@@ -1,3 +1,35 @@
+/**
+ *
+ * @file safety-ab.cpp
+ * @brief
+ * Safety filter node for evaluating the safety status of two different systems (diff_A and diff_B) 
+ * and publishing the combined safety status. The node subscribes to safety status topics of both systems, 
+ * evaluates the safety status based on logical AND operation, and publishes the combined safety status.
+ * 
+ * Functionalities :
+ * - Subscribing to safety status topics of diff_A and diff_B
+ * - Evaluating safety status based on logical AND operation
+ * - Publishing the combined safety status
+ *
+ * @code{.unparsed}
+ *      _____
+ *     /  /::\       ___           ___
+ *    /  /:/\:\     /  /\         /  /\
+ *   /  /:/  \:\   /  /:/        /  /:/
+ *  /__/:/ \__\:| /__/::\       /  /:/
+ *  \  \:\ /  /:/ \__\/\:\__   /  /::\
+ *   \  \:\  /:/     \  \:\/\ /__/:/\:\
+ *    \  \:\/:/       \__\::/ \__\/  \:\
+ *     \  \::/        /__/:/       \  \:\
+ *      \__\/         \__\/         \__\/
+ * @endcode
+ *
+ * @author pomelo925 (yoseph.huang@gmail.com)
+ * @version 2.1
+ * @date 2024-03-27
+ *
+ */
+
 #include "ros/ros.h"
 #include "std_msgs/Bool.h"
 #include <vector>
@@ -15,12 +47,16 @@ public:
 
     void diffACallback(const std_msgs::Bool::ConstPtr& msg) {
         diff_A_state_ = msg->data;
-        evaluateAndPublish();
     }
 
     void diffBCallback(const std_msgs::Bool::ConstPtr& msg) {
         diff_B_state_ = msg->data;
-        evaluateAndPublish();
+    }
+
+    void evaluateAndPublish() {
+        std_msgs::Bool output;
+        output.data = diff_A_state_ && diff_B_state_;
+        pub_.publish(output);
     }
 
 private:
@@ -29,20 +65,21 @@ private:
     ros::Subscriber sub_diff_B_;
     ros::Publisher pub_;
 
-    bool diff_A_state_;
-    bool diff_B_state_;
-
-    void evaluateAndPublish() {
-        std_msgs::Bool output;
-        output.data = diff_A_state_ && diff_B_state_;;
-        pub_.publish(output);
-    }
+    bool diff_A_state_ = true;
+    bool diff_B_state_ = true;
 };
 
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "ladybug_safety_filter");
     SafetyFilter filter;
-    ros::spin();
+
+    ros::Rate rate(6); 
+    while (ros::ok()) {
+        ros::spinOnce();
+        filter.evaluateAndPublish(); 
+        rate.sleep(); 
+    }
+
     return 0;
 }

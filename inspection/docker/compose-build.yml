@@ -18,4 +18,12 @@ services:
       - ../extraction-ws:/home/extraction-ws
       - ../startup:/home/startup
 
-    command: /bin/bash -c "cd /home/extraction-ws && catkin_make && echo 'done make'"
+    command: >
+      /bin/bash -c "
+      cd /home/extraction-ws 
+      && catkin_make
+      && chmod +x /home/extraction-ws/devel/lib/diff-rs-pcl2/*
+      && chmod +x /home/extraction-ws/devel/lib/univ-rs-pcl2/*
+      && cd /home/realsense-ws 
+      && catkin_make
+      "

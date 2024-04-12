@@ -14,7 +14,7 @@
     <param name="filter_high_y" value="0.06" /> 
     <!-- Filter Params for Z axis -->
     <param name="filter_low_z" value="0" />
-    <param name="filter_high_z" value="1" />
+    <param name="filter_high_z" value="1.5" />
     <!-- Filter Params for X axis -->
     <param name="filter_low_x" value="-0.5" />
     <param name="filter_high_x" value="0.5" />
@@ -32,7 +32,7 @@
 
   <!-- Step 4 - Safety Params -->
     <!-- unit: m -->
-    <param name="min_safety_dist" value="0.35" />
+    <param name="min_safety_dist" value="0.3" />
     <!-- unit: sec -->
     <param name="obstacle_existence_checking_period" value="1" /> 
   </node>
