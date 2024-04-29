@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="diff-rs-pcl2" type="D-safety-a" name="D_safety_a" output="screen"> </node>
+</launch>
