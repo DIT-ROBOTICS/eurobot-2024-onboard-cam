@@ -45,7 +45,7 @@ private:
 
     double line_thickness;
     double min_safety_dist;
-    size_t window_size=10;
+    size_t window_size=3;
 
     std::deque<double> distance_window;
 

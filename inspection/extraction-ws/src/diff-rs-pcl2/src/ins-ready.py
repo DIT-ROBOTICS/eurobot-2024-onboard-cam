@@ -1,32 +1,19 @@
 #!/usr/bin/env python
 
 import rospy
-from std_msgs.msg import Bool
-from geometry_msgs.msg import PointStamped
-from std_srvs.srv import SetBool, SetBoolResponse 
+from std_srvs.srv import SetBool, SetBoolRequest
 
-def ready_signal_callback(request):
-    rospy.loginfo("Ready signal successfully received.")
-    return SetBoolResponse(success=True, message="Ready signal set to True.") 
-
-def main():
-    rospy.init_node('main_ready')
-    
-    # Corrected the service type and added missing parenthesis
-    service = rospy.Service('/robot/objects/ladybug_activate', SetBool, ready_signal_callback)
-    pub = rospy.Publisher('/robot/startup/ready_signal', PointStamped, queue_size=10)  #
-    
-    rospy.loginfo("Ready signal successfully sent out.")
-    rate = rospy.Rate(1)  # 1 Hz
-    while not rospy.is_shutdown():
-        ready_signal = PointStamped()
-        ready_signal.header.stamp = rospy.Time.now()
-        ready_signal.header.frame_id = "inspection"
-        pub.publish(ready_signal)
-        rate.sleep()
+def send_ready_signal():
+    rospy.wait_for_service('/robot/objects/ladybug_activate')
+    try:
+        activate_service = rospy.ServiceProxy('/robot/objects/ladybug_activate', SetBool)
+        request = SetBoolRequest()
+        request.data = True 
+        response = activate_service(request)
+        rospy.loginfo("Response: %s", response.message)
+    except rospy.ServiceException as e:
+        rospy.logerr("Service call failed: %s", e)
 
 if __name__ == '__main__':
-    try:
-        main()
-    except rospy.ROSInterruptException:
-        pass
+    rospy.init_node('ready_signal_client')
+    send_ready_signal()

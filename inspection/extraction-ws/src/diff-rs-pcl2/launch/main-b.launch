@@ -14,10 +14,10 @@
     <param name="filter_high_y" value="0.06" /> 
     <!-- Filter Params for Z axis -->
     <param name="filter_low_z" value="0" />
-    <param name="filter_high_z" value="1.5" />
+    <param name="filter_high_z" value="1" />
     <!-- Filter Params for X axis -->
     <param name="filter_low_x" value="-0.5" />
-    <param name="filter_high_x" value="0.5" />
+    <param name="filter_high_x" value="0.2" />
 
 
   <!-- Step 2 - DBSCAN Cluster -->

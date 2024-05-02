@@ -130,6 +130,12 @@ void dbscan::checkAndPublishSafety(const double& min_distance) {
     // Check the filtered distance and publish to safety topic
     std_msgs::Bool is_safe_msg;
     is_safe_msg.data = filtered_distance >= min_safety_dist; // True if filtered distance is safe
+    
+    //std::cout << "\033[2J\033[1;1H"; 
+    //std::cout << "Safe:" << is_safe_msg << std::endl;
+    //std::cout << "\033[A\033[K";
+    //std::cout << is_safe_msg << std::endl;
+    
     safety_pub.publish(is_safe_msg);
 }
 
@@ -179,9 +185,8 @@ void dbscan::clusterAndVisualize(const sensor_msgs::PointCloud2ConstPtr& cloud_m
 
     std::cout << "\033[2J\033[1;1H"; 
     std::cout << "Min Dist:" << GlobalMinDistance << std::endl;
-
     std::cout << "\033[A\033[K";
-    std::cout << "Distance to Nearest Point: " << GlobalMinDistance << " meters" << std::endl;
+    std::cout <<  GlobalMinDistance << std::endl;
 
     // Publish the markers to visualize in RViz
     if (!marker_array.markers.empty()) {

@@ -6,7 +6,7 @@
 ### 
 
 ### ARGUMENTS ###
-CAM_A_SYSTEM_ON=0 # Set to 1 to turn on, 0 to turn off
+CAM_A_SYSTEM_ON=1 # Set to 1 to turn on, 0 to turn off
 CAM_B_SYSTEM_ON=1
 ###
 
@@ -20,15 +20,15 @@ if [ "$CAM_A_SYSTEM_ON" -eq 1 ]; then
     echo "Starting differential inspection system for Camera A..."
     run_script_with_delay "/home/startup/diff/task/diff-cam-a.sh" 1
     run_script_with_delay "/home/startup/diff/task/diff-ladybug-a.sh" 1
-    run_script_with_delay "/home/startup/diff/task/diff-safety-a.sh" 1
 fi
 
 if [ "$CAM_B_SYSTEM_ON" -eq 1 ]; then
     echo "Starting differential inspection system for Camera B..."
     run_script_with_delay "/home/startup/diff/task/diff-cam-b.sh" 1
     run_script_with_delay "/home/startup/diff/task/diff-ladybug-b.sh" 1
-    run_script_with_delay "/home/startup/diff/task/diff-safety-b.sh" 1
 fi
+
+run_script_with_delay "/home/startup/diff/task/diff-safety-ab.sh" 1
 
 wait
 echo "All scheduled scripts have completed."
