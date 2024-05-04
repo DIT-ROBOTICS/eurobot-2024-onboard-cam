@@ -6,8 +6,8 @@
 ### 
 
 ### ARGUMENTS ###
-CAM_A_SYSTEM_ON=0 # Set to 1 to turn on, 0 to turn off
-CAM_B_SYSTEM_ON=1
+CAM_A_SYSTEM_ON=1 # Set to 1 to turn on, 0 to turn off
+CAM_B_SYSTEM_ON=0
 ###
 
 run_script_with_delay() {
