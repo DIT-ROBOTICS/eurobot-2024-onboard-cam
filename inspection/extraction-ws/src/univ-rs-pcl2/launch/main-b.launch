@@ -14,16 +14,21 @@
     <param name="filter_high_y" value="1" /> 
     <!-- Filter Params for Z axis -->
     <param name="filter_low_z" value="-1" />
-    <param name="filter_high_z" value="0.25" />
+    <param name="filter_high_z" value="0.3" />
     <!-- Filter Params for X axis -->
     <param name="filter_low_x" value="-1" />
     <param name="filter_high_x" value="1" />
 
+    <!-- Filter Params for Down Sample -->
+    <param name="leaf_size" value="0.003" /> <!-- 0.002 -->
+    <!-- Filter Params for Plane Segment -->
+    <param name="max_iterations" value="200" /> <!-- 1000 -->
+    <param name="distance_threshold" value="0.01" />
 
   <!-- Step 2 - DBSCAN Cluster -->
     <remap from="dbscan/input" to="/$(arg camera)/depth/color/points" />
     <!-- DBSCAN Params -->
-    <param name="cluster_tolerance" value="0.01" />
+    <param name="cluster_tolerance" value="0.03" />
     <param name="min_cluster_size" value="200" />
     <param name="max_cluster_size" value="20000" />
 
@@ -32,7 +37,7 @@
 
   <!-- Step 4 - Safety Params -->
     <!-- unit: m -->
-    <param name="min_safety_dist" value="0.15" />
+    <param name="min_safety_dist" value="0.40" />
     <!-- unit: sec -->
     <param name="obstacle_existence_checking_period" value="1" /> 
   </node>

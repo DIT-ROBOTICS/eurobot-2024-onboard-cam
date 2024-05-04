@@ -6,7 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /Image1
+        - /PointCloud21
+        - /MarkerArray1
       Splitter Ratio: 0.5
     Tree Height: 475
   - Class: rviz/Selection
@@ -74,15 +75,15 @@ Visualization Manager:
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
-      Style: Flat Squares
-      Topic: /diff_cam_B/depth/color/points
+      Style: Points
+      Topic: /univ_cam_B/universal/ladybug/cube
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /diff_cam_B/color/image_raw
+      Image Topic: /univ_cam_B/color/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -94,17 +95,17 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /diff_B/visualization_marker_array
+      Marker Topic: /univ_B/visualization_marker_array
       Name: MarkerArray
       Namespaces:
-        {}
+        bounding_box: true
       Queue Size: 100
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: diff_cam_B_color_frame
+    Fixed Frame: univ_cam_B_color_frame
     Frame Rate: 30
   Name: root
   Tools:
@@ -128,7 +129,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.544558048248291
+      Distance: 0.5992668867111206
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -136,17 +137,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.8303695917129517
-        Y: -0.06961280107498169
-        Z: 0.48827052116394043
+        X: 0.29802849888801575
+        Y: -0.1526404768228531
+        Z: -0.11548874527215958
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -0.039601922035217285
+      Pitch: 0.6803982257843018
       Target Frame: <Fixed Frame>
-      Yaw: 3.1203999519348145
+      Yaw: 2.075399875640869
     Saved: ~
 Window Geometry:
   Displays:
@@ -167,4 +168,4 @@ Window Geometry:
     collapsed: true
   Width: 1536
   X: 0
-  Y: 23
+  Y: 27

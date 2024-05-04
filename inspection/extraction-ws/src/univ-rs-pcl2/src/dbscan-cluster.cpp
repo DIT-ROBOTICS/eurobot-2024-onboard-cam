@@ -37,6 +37,20 @@
 
 #include "dbscan-cluster.h"
 
+struct MinDistanceManager {
+    double global_min_distance = std::numeric_limits<double>::max();
+
+    void updateMinDistance(double min_distance) {
+        if (min_distance < global_min_distance) {
+            global_min_distance = min_distance;
+        }
+    }
+
+    double getMinDistance() const {
+        return global_min_distance; 
+    }
+};
+
 std_msgs::ColorRGBA dbscan::assignColor(int id){
     std_msgs::ColorRGBA color;
     color.a = 1.0; // Full opacity
@@ -117,55 +131,10 @@ void dbscan::checkAndPublishSafety(const double& min_distance) {
 }
 
 
-void dbscan::addFilledConvexHullMarkersTo(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster, 
-    visualization_msgs::MarkerArray& marker_array, int cluster_id, const std::string& frame_id){
-    pcl::ConvexHull<pcl::PointXYZRGB> chull;
-    chull.setInputCloud(cloud_cluster);
-    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_hull(new pcl::PointCloud<pcl::PointXYZRGB>);
-    std::vector<pcl::Vertices> hullPolygons;
-    chull.reconstruct(*cloud_hull, hullPolygons);
-    visualization_msgs::Marker marker;
-
-    marker.header.frame_id = frame_id;
-    marker.header.stamp = ros::Time::now();
-    marker.ns = "hull";
-    marker.id = cluster_id;
-    marker.type = visualization_msgs::Marker::TRIANGLE_LIST;
-    marker.action = visualization_msgs::Marker::ADD;
-    marker.pose.orientation.w = 1.0;
-    marker.scale.x = marker.scale.y = marker.scale.z = 1.0;
-    marker.color = assignColor(cluster_id);
-
-    // Assuming the hullPolygons contains a single polygon for the convex hull
-    for (const auto& poly : hullPolygons) {
-        for (size_t i = 1; i <= poly.vertices.size() - 2; ++i) {
-            // Add the first vertex of the triangle
-            geometry_msgs::Point p;
-            p.x = cloud_hull->points[poly.vertices[0]].x;
-            p.y = cloud_hull->points[poly.vertices[0]].y;
-            p.z = cloud_hull->points[poly.vertices[0]].z;
-            marker.points.push_back(p);
-
-            // Add the second vertex of the triangle
-            p.x = cloud_hull->points[poly.vertices[i]].x;
-            p.y = cloud_hull->points[poly.vertices[i]].y;
-            p.z = cloud_hull->points[poly.vertices[i]].z;
-            marker.points.push_back(p);
-            
-            // Add the third vertex of the triangle
-            p.x = cloud_hull->points[poly.vertices[i+1]].x;
-            p.y = cloud_hull->points[poly.vertices[i+1]].y;
-            p.z = cloud_hull->points[poly.vertices[i+1]].z;
-            marker.points.push_back(p);
-        }
-    }
-    marker_array.markers.push_back(marker);
-}
-
 void dbscan::clusterAndVisualize(const sensor_msgs::PointCloud2ConstPtr& cloud_msg) {
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
     pcl::fromROSMsg(*cloud_msg, *cloud);
-
+    MinDistanceManager minDistanceManager;
     // Check for empty cloud and clear previous markers
     if (cloud->empty()) {
         // ROS_WARN("Received an empty point cloud.");
@@ -194,10 +163,20 @@ void dbscan::clusterAndVisualize(const sensor_msgs::PointCloud2ConstPtr& cloud_m
             cloud_cluster->push_back((*cloud)[idx]);
         }
         // Analyze the cluster and print information
-        analyzeAndPrintObjectInfo(cloud_cluster);
+        double current_min_distance = analyzeAndPrintObjectInfo(cloud_cluster);
+        minDistanceManager.updateMinDistance(current_min_distance);
+
         // Add bounding box markers for visualization
         addBoundingBoxMarker(cloud_cluster, marker_array, i, cloud_msg->header.frame_id);
     }
+
+    double GlobalMinDistance = minDistanceManager.getMinDistance();
+    checkAndPublishSafety(GlobalMinDistance);
+
+    std::cout << "\033[2J\033[1;1H"; 
+    std::cout << "Min Dist:" << GlobalMinDistance << std::endl;
+    std::cout << "\033[A\033[K";
+    std::cout <<  GlobalMinDistance << std::endl;
 
     // Publish the markers to visualize in RViz
     if (!marker_array.markers.empty()) {
@@ -205,7 +184,7 @@ void dbscan::clusterAndVisualize(const sensor_msgs::PointCloud2ConstPtr& cloud_m
     }
 }
 
-void dbscan::analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster) {
+double dbscan::analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster) {
     Eigen::Vector4f min_pt, max_pt;
     pcl::getMinMax3D(*cloud_cluster, min_pt, max_pt);
 
@@ -221,7 +200,7 @@ void dbscan::analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::
     bounding_box_points.push_back(Eigen::Vector4f(max_pt[0], max_pt[1], max_pt[2], 1));
 
     // Calculate the volume
-    double volume = (max_pt[0] - min_pt[0]) * (max_pt[1] - min_pt[1]) * (max_pt[2] - min_pt[2]);
+    // double volume = (max_pt[0] - min_pt[0]) * (max_pt[1] - min_pt[1]) * (max_pt[2] - min_pt[2]);
 
     // Find the nearest point to the camera
     double min_distance = std::numeric_limits<double>::max();
@@ -233,23 +212,7 @@ void dbscan::analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::
             nearest_point = point;
         }
     }
-    // Check the nearest point distance and publish to safety topic
-    std_msgs::Bool is_safe_msg;
-    is_safe_msg.data = (min_distance >= min_safety_dist); 
-    safety_pub.publish(is_safe_msg);
-
-    // Print the information
-    // std::cout << "\033[2J\033[1;1H"; 
-    // std::cout << "Object Information:" << std::endl;
-    // std::cout << "Bounding Box Points:" << std::endl;
-    // for (const auto& point : bounding_box_points) {
-    //     std::cout << "(" << point[0] << ", " << point[1] << ", " << point[2] << ")" << std::endl;
-    // }
-    // std::cout << "Volume: " << volume << " cubic meters" << std::endl;
-    // std::cout << "Nearest Point to Camera: (" << nearest_point[0] << ", " << nearest_point[1] << ", " << nearest_point[2] << ")" << std::endl;
-    
-    std::cout << "\033[A\033[K";
-    std::cout << "Distance to Nearest Point: " << min_distance << " meters" << std::endl;
+    return min_distance;
 }
 
 void dbscan::addBoundingBoxMarker(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster,
@@ -303,7 +266,6 @@ void dbscan::cloudCallback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg) {
     has_received_msg = true;
     clusterAndVisualize(cloud_msg);
 }
-
 
 void dbscan::timerCallback(const ros::TimerEvent& event) {
     if (!has_received_msg) {

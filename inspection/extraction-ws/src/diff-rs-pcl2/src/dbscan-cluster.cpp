@@ -131,11 +131,6 @@ void dbscan::checkAndPublishSafety(const double& min_distance) {
     std_msgs::Bool is_safe_msg;
     is_safe_msg.data = filtered_distance >= min_safety_dist; // True if filtered distance is safe
     
-    //std::cout << "\033[2J\033[1;1H"; 
-    //std::cout << "Safe:" << is_safe_msg << std::endl;
-    //std::cout << "\033[A\033[K";
-    //std::cout << is_safe_msg << std::endl;
-    
     safety_pub.publish(is_safe_msg);
 }
 

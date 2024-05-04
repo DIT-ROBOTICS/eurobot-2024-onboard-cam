@@ -26,9 +26,9 @@ public:
     std_msgs::ColorRGBA assignColor(int id);
     double calculateMovingAverage();
     void cloudCallback(const sensor_msgs::PointCloud2ConstPtr& cloud_msg);
-
+    
     void clusterAndVisualize(const sensor_msgs::PointCloud2ConstPtr& cloud_msg);
-    void analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster);
+    double analyzeAndPrintObjectInfo(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster);
    
     void addFilledConvexHullMarkersTo(const pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_cluster,
             visualization_msgs::MarkerArray& marker_array, int cluster_id, const std::string& frame_id);
@@ -47,7 +47,7 @@ private:
 
     double line_thickness;
     double min_safety_dist;
-    size_t window_size=10;
+    size_t window_size=3;
 
     std::deque<double> distance_window;
 
